@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:stockify/common/constants/assets.dart';
+import 'package:stockify/core/constants/assets.dart';
 import 'package:stockify/common/extension/string_harcoded.dart';
 import 'package:stockify/common/http_status/status_code.dart';
 import 'package:stockify/core/route/route_name.dart';
