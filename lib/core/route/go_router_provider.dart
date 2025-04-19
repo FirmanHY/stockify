@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:stockify/core/enums/role.dart';
 import 'package:stockify/core/providers/auth_provider.dart';
 import 'package:stockify/core/route/route_name.dart';
 import 'package:stockify/core/widgets/widgets.dart';
@@ -50,6 +51,19 @@ final routerProvider = Provider<GoRouter>((ref) {
       } else {
         if (!isLogin) {
           return RouteName.login;
+        }
+      }
+
+      // Role-based access control
+      if (isAuth) {
+        final allowedRoutes = _getAllowedRoutes(authNotifier.role);
+        final currentRoute = state.matchedLocation;
+
+        if (!allowedRoutes.contains(currentRoute)) {
+          debugPrint(
+            '[RBAC] Access denied for ${authNotifier.role} to $currentRoute',
+          );
+          return RouteName.home;
         }
       }
 
@@ -110,3 +124,21 @@ final routerProvider = Provider<GoRouter>((ref) {
     ],
   );
 });
+
+List<String> _getAllowedRoutes(Role role) {
+  switch (role) {
+    case Role.admin:
+    case Role.warehouseAdmin:
+      return [
+        RouteName.home,
+        RouteName.items,
+        RouteName.masterData,
+        RouteName.transactions,
+        RouteName.reports,
+      ];
+    case Role.warehouseManager:
+      return [RouteName.home, RouteName.reports];
+    default:
+      return [RouteName.login];
+  }
+}
