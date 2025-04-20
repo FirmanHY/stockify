@@ -16,19 +16,12 @@ class LoginButton extends ConsumerWidget {
 
     return SizedBox(
       width: double.infinity,
-      child: FilledButton.icon(
-        style: FilledButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: kMedium),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(kSmall),
-          ),
-        ),
-        label: Text(
+      child: FilledButton(
+        onPressed: isLoading ? null : onPressed,
+        child: Text(
           'Masuk'.hardcoded,
           style: const TextStyle(fontSize: kMedium),
         ),
-
-        onPressed: isLoading ? null : onPressed,
       ),
     );
   }

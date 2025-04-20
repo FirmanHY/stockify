@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:stockify/common/dtos/api_response.dart';
+import 'package:stockify/common/dtos/api_response/api_response.dart';
 import 'package:stockify/common/exception/failure.dart';
 import 'package:stockify/common/extension/string_harcoded.dart';
 import 'package:stockify/common/mixin/dio_exception_mapper.dart';

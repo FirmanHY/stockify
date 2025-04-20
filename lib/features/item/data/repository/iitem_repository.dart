@@ -1,0 +1,10 @@
+import 'package:stockify/common/dtos/api_response/api_response.dart';
+import 'package:stockify/common/dtos/paginated_response/paginated_response.dart';
+import 'package:stockify/features/item/data/dto/request/item_request.dart';
+import 'package:stockify/features/item/data/dto/response/item_response.dart';
+
+abstract interface class IItemRepository {
+  Future<ApiResponse<PaginatedResponse<ItemResponse>>> getItems(
+    ItemRequest request,
+  );
+}

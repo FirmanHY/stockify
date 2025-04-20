@@ -71,12 +71,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
               TextFormField(
                 controller: _emailController,
                 keyboardType: TextInputType.name,
-                decoration: InputDecoration(
-                  labelText: 'Username'.hardcoded,
-                  border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(kSmall)),
-                  ),
-                ),
+                decoration: InputDecoration(labelText: 'Username'.hardcoded),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Silahkan masukan username anda'.hardcoded;
@@ -91,12 +86,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
               TextFormField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Password'.hardcoded,
-                  border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(kSmall)),
-                  ),
-                ),
+                decoration: InputDecoration(labelText: 'Password'.hardcoded),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Silahkan masukan password anda'.hardcoded;

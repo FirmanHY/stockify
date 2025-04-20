@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiple_result/multiple_result.dart';
-import 'package:stockify/common/dtos/api_response.dart';
+import 'package:stockify/common/dtos/api_response/api_response.dart';
 import 'package:stockify/common/exception/failure.dart';
 import 'package:stockify/features/login/application/ilogin_service.dart';
 import 'package:stockify/features/login/data/dto/request/login_request.dart';

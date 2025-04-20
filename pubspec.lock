@@ -528,6 +528,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.11.1"
+  material_table_view:
+    dependency: "direct main"
+    description:
+      name: material_table_view
+      sha256: "86ff8365db23076a748704ff9da40382751451a6930c34501de38ea1f520eddc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.3.0"
   meta:
     dependency: transitive
     description:
@@ -728,11 +736,27 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  shimmer:
+    dependency: "direct main"
+    description:
+      name: shimmer
+      sha256: "5f88c883a22e9f9f299e5ba0e4f7e6054857224976a5d9f839d4ebdc94a14ac9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
+  sliver_passthrough:
+    dependency: transitive
+    description:
+      name: sliver_passthrough
+      sha256: aa199d4b578785ce170aaf28f8dfaeae8ec159f4081cc4bf50dcd35b770d9a74
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   source_gen:
     dependency: transitive
     description:
