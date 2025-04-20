@@ -22,7 +22,10 @@ class HomeScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: const Center(child: Text('Home Screen Content')),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: const Center(child: Text('Home Screen Content')),
+      ),
     );
   }
 }
