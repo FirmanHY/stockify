@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class StickySearchBarDelegate extends SliverPersistentHeaderDelegate {
   final Widget child;
+  final double height;
 
-  StickySearchBarDelegate({required this.child});
+  StickySearchBarDelegate({required this.child, required this.height});
 
   @override
   Widget build(
@@ -13,16 +14,17 @@ class StickySearchBarDelegate extends SliverPersistentHeaderDelegate {
   ) {
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
-      child: child,
+      child: SizedBox(height: height, child: child),
     );
   }
 
   @override
-  double get maxExtent => 140.0;
-  @override
-  double get minExtent => 140.0;
+  double get maxExtent => height;
 
   @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
-      true;
+  double get minExtent => height;
+
+  @override
+  bool shouldRebuild(covariant StickySearchBarDelegate oldDelegate) =>
+      oldDelegate.height != height || oldDelegate.child != child;
 }

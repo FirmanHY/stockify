@@ -6,3 +6,5 @@ export 'inventory_item_shimmer/inventory_item_shimmer.dart';
 export 'empty_state_widget/empty_state_widget.dart';
 export 'error_state_widget/error_state_widget.dart';
 export 'sticky_search_bar_delegate/sticky_search_bar_delegate.dart';
+export 'entity_tile/entity_tile.dart';
+export 'entity_tile_shimmer/entity_tile_shimmer.dart';
