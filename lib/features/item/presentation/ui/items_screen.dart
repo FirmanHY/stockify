@@ -52,6 +52,7 @@ class _ItemsScreenState extends ConsumerState<ItemsScreen> {
             SliverPersistentHeader(
               pinned: true,
               delegate: StickySearchBarDelegate(
+                height: 140,
                 child: Padding(
                   padding: const EdgeInsets.all(kMedium),
                   child: Column(
