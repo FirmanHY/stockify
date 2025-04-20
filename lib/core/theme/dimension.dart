@@ -8,6 +8,7 @@ const double kExtraLarge = 32.0;
 const double kDoubleExtraLarge = 64.0;
 
 // Font Sizes
+const double kFontSizeXXXS = 10.0;
 const double kFontSizeXXS = 12.0;
 const double kFontSizeXS = 14.0;
 const double kFontSizeSM = 16.0;
