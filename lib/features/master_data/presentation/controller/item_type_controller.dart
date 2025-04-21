@@ -116,4 +116,72 @@ class ItemTypeController extends StateNotifier<ItemTypeState> {
       state = state.copyWith(currentPage: 1, error: null);
     }
   }
+
+  Future<void> createItemType(String typeName) async {
+    state = state.copyWith(isCreating: true, createError: null);
+    final result = await ref
+        .read(itemTypeServiceProvider)
+        .createItemType(typeName);
+    result.when(
+      (success) {
+        state = state.copyWith(
+          isCreating: false,
+          itemTypes: [success, ...state.itemTypes],
+        );
+      },
+      (error) {
+        state = state.copyWith(isCreating: false, createError: error.message);
+      },
+    );
+  }
+
+  Future<void> updateItemType(String id, String typeName) async {
+    state = state.copyWith(isUpdating: true, updateError: null);
+    final result = await ref
+        .read(itemTypeServiceProvider)
+        .updateItemType(id, typeName);
+    result.when(
+      (success) {
+        state = state.copyWith(
+          isUpdating: false,
+          itemTypes:
+              state.itemTypes
+                  .map((item) => item.typeId == id ? success : item)
+                  .toList(),
+        );
+      },
+      (error) {
+        state = state.copyWith(isUpdating: false, updateError: error.message);
+      },
+    );
+  }
+
+  Future<void> deleteItemType(String id) async {
+    state = state.copyWith(isDeleting: true, deleteError: null);
+    final result = await ref.read(itemTypeServiceProvider).deleteItemType(id);
+    result.when(
+      (success) {
+        state = state.copyWith(
+          isDeleting: false,
+          itemTypes:
+              state.itemTypes.where((item) => item.typeId != id).toList(),
+        );
+      },
+      (error) {
+        state = state.copyWith(isDeleting: false, deleteError: error.message);
+      },
+    );
+  }
+
+  void clearCreateError() {
+    state = state.copyWith(createError: null);
+  }
+
+  void clearUpdateError() {
+    state = state.copyWith(updateError: null);
+  }
+
+  void clearDeleteError() {
+    state = state.copyWith(deleteError: null);
+  }
 }

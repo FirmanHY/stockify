@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UnitState {
 
- List<UnitResponse> get units; bool get isLoading; bool get isInitialLoading; String? get error; int get currentPage; int get limit; String? get searchQuery; Pagination? get pagination;
+ List<UnitResponse> get units; bool get isLoading; bool get isInitialLoading; String? get error; int get currentPage; int get limit; String? get searchQuery; Pagination? get pagination; bool get isCreating; String? get createError; bool get isUpdating; bool get isDeleting; String? get updateError; String? get deleteError;
 /// Create a copy of UnitState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $UnitStateCopyWith<UnitState> get copyWith => _$UnitStateCopyWithImpl<UnitState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UnitState&&const DeepCollectionEquality().equals(other.units, units)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isInitialLoading, isInitialLoading) || other.isInitialLoading == isInitialLoading)&&(identical(other.error, error) || other.error == error)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.pagination, pagination) || other.pagination == pagination));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UnitState&&const DeepCollectionEquality().equals(other.units, units)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isInitialLoading, isInitialLoading) || other.isInitialLoading == isInitialLoading)&&(identical(other.error, error) || other.error == error)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.pagination, pagination) || other.pagination == pagination)&&(identical(other.isCreating, isCreating) || other.isCreating == isCreating)&&(identical(other.createError, createError) || other.createError == createError)&&(identical(other.isUpdating, isUpdating) || other.isUpdating == isUpdating)&&(identical(other.isDeleting, isDeleting) || other.isDeleting == isDeleting)&&(identical(other.updateError, updateError) || other.updateError == updateError)&&(identical(other.deleteError, deleteError) || other.deleteError == deleteError));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(units),isLoading,isInitialLoading,error,currentPage,limit,searchQuery,pagination);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(units),isLoading,isInitialLoading,error,currentPage,limit,searchQuery,pagination,isCreating,createError,isUpdating,isDeleting,updateError,deleteError);
 
 @override
 String toString() {
-  return 'UnitState(units: $units, isLoading: $isLoading, isInitialLoading: $isInitialLoading, error: $error, currentPage: $currentPage, limit: $limit, searchQuery: $searchQuery, pagination: $pagination)';
+  return 'UnitState(units: $units, isLoading: $isLoading, isInitialLoading: $isInitialLoading, error: $error, currentPage: $currentPage, limit: $limit, searchQuery: $searchQuery, pagination: $pagination, isCreating: $isCreating, createError: $createError, isUpdating: $isUpdating, isDeleting: $isDeleting, updateError: $updateError, deleteError: $deleteError)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $UnitStateCopyWith<$Res>  {
   factory $UnitStateCopyWith(UnitState value, $Res Function(UnitState) _then) = _$UnitStateCopyWithImpl;
 @useResult
 $Res call({
- List<UnitResponse> units, bool isLoading, bool isInitialLoading, String? error, int currentPage, int limit, String? searchQuery, Pagination? pagination
+ List<UnitResponse> units, bool isLoading, bool isInitialLoading, String? error, int currentPage, int limit, String? searchQuery, Pagination? pagination, bool isCreating, String? createError, bool isUpdating, bool isDeleting, String? updateError, String? deleteError
 });
 
 
@@ -63,7 +63,7 @@ class _$UnitStateCopyWithImpl<$Res>
 
 /// Create a copy of UnitState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? units = null,Object? isLoading = null,Object? isInitialLoading = null,Object? error = freezed,Object? currentPage = null,Object? limit = null,Object? searchQuery = freezed,Object? pagination = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? units = null,Object? isLoading = null,Object? isInitialLoading = null,Object? error = freezed,Object? currentPage = null,Object? limit = null,Object? searchQuery = freezed,Object? pagination = freezed,Object? isCreating = null,Object? createError = freezed,Object? isUpdating = null,Object? isDeleting = null,Object? updateError = freezed,Object? deleteError = freezed,}) {
   return _then(_self.copyWith(
 units: null == units ? _self.units : units // ignore: cast_nullable_to_non_nullable
 as List<UnitResponse>,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
@@ -73,7 +73,13 @@ as String?,currentPage: null == currentPage ? _self.currentPage : currentPage //
 as int,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
 as int,searchQuery: freezed == searchQuery ? _self.searchQuery : searchQuery // ignore: cast_nullable_to_non_nullable
 as String?,pagination: freezed == pagination ? _self.pagination : pagination // ignore: cast_nullable_to_non_nullable
-as Pagination?,
+as Pagination?,isCreating: null == isCreating ? _self.isCreating : isCreating // ignore: cast_nullable_to_non_nullable
+as bool,createError: freezed == createError ? _self.createError : createError // ignore: cast_nullable_to_non_nullable
+as String?,isUpdating: null == isUpdating ? _self.isUpdating : isUpdating // ignore: cast_nullable_to_non_nullable
+as bool,isDeleting: null == isDeleting ? _self.isDeleting : isDeleting // ignore: cast_nullable_to_non_nullable
+as bool,updateError: freezed == updateError ? _self.updateError : updateError // ignore: cast_nullable_to_non_nullable
+as String?,deleteError: freezed == deleteError ? _self.deleteError : deleteError // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 /// Create a copy of UnitState
@@ -96,7 +102,7 @@ $PaginationCopyWith<$Res>? get pagination {
 
 
 class _UnitState extends UnitState {
-  const _UnitState({final  List<UnitResponse> units = const [], this.isLoading = false, this.isInitialLoading = false, this.error, this.currentPage = 1, this.limit = 10, this.searchQuery, this.pagination}): _units = units,super._();
+  const _UnitState({final  List<UnitResponse> units = const [], this.isLoading = false, this.isInitialLoading = false, this.error, this.currentPage = 1, this.limit = 10, this.searchQuery, this.pagination, this.isCreating = false, this.createError, this.isUpdating = false, this.isDeleting = false, this.updateError, this.deleteError}): _units = units,super._();
   
 
  final  List<UnitResponse> _units;
@@ -113,6 +119,12 @@ class _UnitState extends UnitState {
 @override@JsonKey() final  int limit;
 @override final  String? searchQuery;
 @override final  Pagination? pagination;
+@override@JsonKey() final  bool isCreating;
+@override final  String? createError;
+@override@JsonKey() final  bool isUpdating;
+@override@JsonKey() final  bool isDeleting;
+@override final  String? updateError;
+@override final  String? deleteError;
 
 /// Create a copy of UnitState
 /// with the given fields replaced by the non-null parameter values.
@@ -124,16 +136,16 @@ _$UnitStateCopyWith<_UnitState> get copyWith => __$UnitStateCopyWithImpl<_UnitSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UnitState&&const DeepCollectionEquality().equals(other._units, _units)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isInitialLoading, isInitialLoading) || other.isInitialLoading == isInitialLoading)&&(identical(other.error, error) || other.error == error)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.pagination, pagination) || other.pagination == pagination));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UnitState&&const DeepCollectionEquality().equals(other._units, _units)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isInitialLoading, isInitialLoading) || other.isInitialLoading == isInitialLoading)&&(identical(other.error, error) || other.error == error)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.pagination, pagination) || other.pagination == pagination)&&(identical(other.isCreating, isCreating) || other.isCreating == isCreating)&&(identical(other.createError, createError) || other.createError == createError)&&(identical(other.isUpdating, isUpdating) || other.isUpdating == isUpdating)&&(identical(other.isDeleting, isDeleting) || other.isDeleting == isDeleting)&&(identical(other.updateError, updateError) || other.updateError == updateError)&&(identical(other.deleteError, deleteError) || other.deleteError == deleteError));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_units),isLoading,isInitialLoading,error,currentPage,limit,searchQuery,pagination);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_units),isLoading,isInitialLoading,error,currentPage,limit,searchQuery,pagination,isCreating,createError,isUpdating,isDeleting,updateError,deleteError);
 
 @override
 String toString() {
-  return 'UnitState(units: $units, isLoading: $isLoading, isInitialLoading: $isInitialLoading, error: $error, currentPage: $currentPage, limit: $limit, searchQuery: $searchQuery, pagination: $pagination)';
+  return 'UnitState(units: $units, isLoading: $isLoading, isInitialLoading: $isInitialLoading, error: $error, currentPage: $currentPage, limit: $limit, searchQuery: $searchQuery, pagination: $pagination, isCreating: $isCreating, createError: $createError, isUpdating: $isUpdating, isDeleting: $isDeleting, updateError: $updateError, deleteError: $deleteError)';
 }
 
 
@@ -144,7 +156,7 @@ abstract mixin class _$UnitStateCopyWith<$Res> implements $UnitStateCopyWith<$Re
   factory _$UnitStateCopyWith(_UnitState value, $Res Function(_UnitState) _then) = __$UnitStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<UnitResponse> units, bool isLoading, bool isInitialLoading, String? error, int currentPage, int limit, String? searchQuery, Pagination? pagination
+ List<UnitResponse> units, bool isLoading, bool isInitialLoading, String? error, int currentPage, int limit, String? searchQuery, Pagination? pagination, bool isCreating, String? createError, bool isUpdating, bool isDeleting, String? updateError, String? deleteError
 });
 
 
@@ -161,7 +173,7 @@ class __$UnitStateCopyWithImpl<$Res>
 
 /// Create a copy of UnitState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? units = null,Object? isLoading = null,Object? isInitialLoading = null,Object? error = freezed,Object? currentPage = null,Object? limit = null,Object? searchQuery = freezed,Object? pagination = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? units = null,Object? isLoading = null,Object? isInitialLoading = null,Object? error = freezed,Object? currentPage = null,Object? limit = null,Object? searchQuery = freezed,Object? pagination = freezed,Object? isCreating = null,Object? createError = freezed,Object? isUpdating = null,Object? isDeleting = null,Object? updateError = freezed,Object? deleteError = freezed,}) {
   return _then(_UnitState(
 units: null == units ? _self._units : units // ignore: cast_nullable_to_non_nullable
 as List<UnitResponse>,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
@@ -171,7 +183,13 @@ as String?,currentPage: null == currentPage ? _self.currentPage : currentPage //
 as int,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
 as int,searchQuery: freezed == searchQuery ? _self.searchQuery : searchQuery // ignore: cast_nullable_to_non_nullable
 as String?,pagination: freezed == pagination ? _self.pagination : pagination // ignore: cast_nullable_to_non_nullable
-as Pagination?,
+as Pagination?,isCreating: null == isCreating ? _self.isCreating : isCreating // ignore: cast_nullable_to_non_nullable
+as bool,createError: freezed == createError ? _self.createError : createError // ignore: cast_nullable_to_non_nullable
+as String?,isUpdating: null == isUpdating ? _self.isUpdating : isUpdating // ignore: cast_nullable_to_non_nullable
+as bool,isDeleting: null == isDeleting ? _self.isDeleting : isDeleting // ignore: cast_nullable_to_non_nullable
+as bool,updateError: freezed == updateError ? _self.updateError : updateError // ignore: cast_nullable_to_non_nullable
+as String?,deleteError: freezed == deleteError ? _self.deleteError : deleteError // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

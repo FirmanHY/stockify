@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stockify/common/dtos/api_response/api_response.dart';
 import 'package:stockify/common/dtos/paginated_response/paginated_response.dart';
 import 'package:stockify/common/mixin/dio_exception_mapper.dart';
+import 'package:stockify/features/master_data/data/dto/request/create_item_type_request.dart';
 import 'package:stockify/features/master_data/data/dto/request/item_type_request.dart';
 import 'package:stockify/features/master_data/data/dto/response/item_type_response.dart';
 import 'package:stockify/features/master_data/data/repository/iitem_type_repository.dart';
@@ -28,6 +29,38 @@ class ItemTypeRepository
   ) async {
     try {
       return await _itemTypeApi.getItemTypes(request);
+    } on DioException catch (e, s) {
+      throw mapDioExceptionToFailure(e, s);
+    }
+  }
+
+  @override
+  Future<ApiResponse<ItemTypeResponse>> createItemType(
+    CreateItemTypeRequest request,
+  ) async {
+    try {
+      return await _itemTypeApi.createItemType(request);
+    } on DioException catch (e, s) {
+      throw mapDioExceptionToFailure(e, s);
+    }
+  }
+
+  @override
+  Future<ApiResponse<ItemTypeResponse>> updateItemType(
+    String id,
+    CreateItemTypeRequest request,
+  ) async {
+    try {
+      return await _itemTypeApi.updateItemType(id, request);
+    } on DioException catch (e, s) {
+      throw mapDioExceptionToFailure(e, s);
+    }
+  }
+
+  @override
+  Future<ApiResponse<void>> deleteItemType(String id) async {
+    try {
+      return await _itemTypeApi.deleteItemType(id);
     } on DioException catch (e, s) {
       throw mapDioExceptionToFailure(e, s);
     }

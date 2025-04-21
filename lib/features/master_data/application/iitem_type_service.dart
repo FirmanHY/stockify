@@ -9,4 +9,12 @@ abstract interface class IItemTypeService {
     int limit,
     String? search,
   });
+
+  Future<Result<ItemTypeResponse, Failure>> createItemType(String typeName);
+  Future<Result<ItemTypeResponse, Failure>> updateItemType(
+    String id,
+    String typeName,
+  );
+
+  Future<Result<void, Failure>> deleteItemType(String id);
 }

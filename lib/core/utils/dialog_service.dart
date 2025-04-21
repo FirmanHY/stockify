@@ -17,13 +17,7 @@ class DialogService {
     return showDialog<T>(
       context: context,
       barrierDismissible: barrierDismissible,
-      builder:
-          (context) => Dialog(
-            backgroundColor: Theme.of(context).colorScheme.surface,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(kMedium),
-            ),
-          ),
+      builder: builder,
     );
   }
 
@@ -43,20 +37,35 @@ class DialogService {
       context: context,
       builder:
           (context) => AlertDialog(
-            title: Text(title),
-            content: Text(content),
+            title: Text(
+              title,
+              style: theme.textTheme.titleMedium,
+              textAlign: TextAlign.center,
+            ),
+            content: Text(
+              content,
+              style: theme.textTheme.bodyMedium,
+              textAlign: TextAlign.center,
+            ),
             actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context, false),
-                child: Text(cancelText),
-              ),
-              FilledButton.icon(
-                onPressed: () => Navigator.pop(context, true),
-                style: FilledButton.styleFrom(
-                  backgroundColor: confirmColor ?? colors.error,
-                ),
-                icon: Icon(confirmIcon ?? Icons.delete),
-                label: Text(confirmText),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, false),
+                    child: Text(cancelText),
+                  ),
+                  const SizedBox(width: kLarge),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, true),
+                    child: Text(
+                      confirmText,
+                      style: theme.textTheme.labelLarge?.copyWith(
+                        color: confirmColor ?? colors.error,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
