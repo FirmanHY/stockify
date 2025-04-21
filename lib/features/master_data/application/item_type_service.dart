@@ -3,6 +3,7 @@ import 'package:multiple_result/multiple_result.dart';
 import 'package:stockify/common/dtos/paginated_response/paginated_response.dart';
 import 'package:stockify/common/exception/failure.dart';
 import 'package:stockify/features/master_data/application/iitem_type_service.dart';
+import 'package:stockify/features/master_data/data/dto/request/create_item_type_request.dart';
 import 'package:stockify/features/master_data/data/dto/request/item_type_request.dart';
 import 'package:stockify/features/master_data/data/dto/response/item_type_response.dart';
 import 'package:stockify/features/master_data/data/repository/iitem_type_repository.dart';
@@ -27,6 +28,43 @@ class ItemTypeService implements IItemTypeService {
     try {
       final request = ItemTypeRequest(page: page, limit: limit, search: search);
       final response = await _repository.getItemTypes(request);
+      return Success(response.data);
+    } on Failure catch (e) {
+      return Error(e);
+    }
+  }
+
+  @override
+  Future<Result<ItemTypeResponse, Failure>> createItemType(
+    String typeName,
+  ) async {
+    try {
+      final request = CreateItemTypeRequest(typeName: typeName);
+      final response = await _repository.createItemType(request);
+      return Success(response.data);
+    } on Failure catch (e) {
+      return Error(e);
+    }
+  }
+
+  @override
+  Future<Result<ItemTypeResponse, Failure>> updateItemType(
+    String id,
+    String typeName,
+  ) async {
+    try {
+      final request = CreateItemTypeRequest(typeName: typeName);
+      final response = await _repository.updateItemType(id, request);
+      return Success(response.data);
+    } on Failure catch (e) {
+      return Error(e);
+    }
+  }
+
+  @override
+  Future<Result<void, Failure>> deleteItemType(String id) async {
+    try {
+      final response = await _repository.deleteItemType(id);
       return Success(response.data);
     } on Failure catch (e) {
       return Error(e);

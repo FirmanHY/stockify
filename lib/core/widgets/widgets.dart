@@ -8,3 +8,4 @@ export 'error_state_widget/error_state_widget.dart';
 export 'sticky_search_bar_delegate/sticky_search_bar_delegate.dart';
 export 'entity_tile/entity_tile.dart';
 export 'entity_tile_shimmer/entity_tile_shimmer.dart';
+export 'option_bottom_sheet_widget/option_bottom_sheet_widget.dart';

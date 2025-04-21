@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ItemTypeState {
 
- List<ItemTypeResponse> get itemTypes; bool get isLoading; bool get isInitialLoading; String? get error; int get currentPage; int get limit; String? get searchQuery; Pagination? get pagination;
+ List<ItemTypeResponse> get itemTypes; bool get isLoading; bool get isInitialLoading; String? get error; int get currentPage; int get limit; String? get searchQuery; Pagination? get pagination; bool get isUpdating; bool get isDeleting; bool get isCreating; String? get createError; String? get updateError; String? get deleteError;
 /// Create a copy of ItemTypeState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $ItemTypeStateCopyWith<ItemTypeState> get copyWith => _$ItemTypeStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ItemTypeState&&const DeepCollectionEquality().equals(other.itemTypes, itemTypes)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isInitialLoading, isInitialLoading) || other.isInitialLoading == isInitialLoading)&&(identical(other.error, error) || other.error == error)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.pagination, pagination) || other.pagination == pagination));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ItemTypeState&&const DeepCollectionEquality().equals(other.itemTypes, itemTypes)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isInitialLoading, isInitialLoading) || other.isInitialLoading == isInitialLoading)&&(identical(other.error, error) || other.error == error)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.pagination, pagination) || other.pagination == pagination)&&(identical(other.isUpdating, isUpdating) || other.isUpdating == isUpdating)&&(identical(other.isDeleting, isDeleting) || other.isDeleting == isDeleting)&&(identical(other.isCreating, isCreating) || other.isCreating == isCreating)&&(identical(other.createError, createError) || other.createError == createError)&&(identical(other.updateError, updateError) || other.updateError == updateError)&&(identical(other.deleteError, deleteError) || other.deleteError == deleteError));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(itemTypes),isLoading,isInitialLoading,error,currentPage,limit,searchQuery,pagination);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(itemTypes),isLoading,isInitialLoading,error,currentPage,limit,searchQuery,pagination,isUpdating,isDeleting,isCreating,createError,updateError,deleteError);
 
 @override
 String toString() {
-  return 'ItemTypeState(itemTypes: $itemTypes, isLoading: $isLoading, isInitialLoading: $isInitialLoading, error: $error, currentPage: $currentPage, limit: $limit, searchQuery: $searchQuery, pagination: $pagination)';
+  return 'ItemTypeState(itemTypes: $itemTypes, isLoading: $isLoading, isInitialLoading: $isInitialLoading, error: $error, currentPage: $currentPage, limit: $limit, searchQuery: $searchQuery, pagination: $pagination, isUpdating: $isUpdating, isDeleting: $isDeleting, isCreating: $isCreating, createError: $createError, updateError: $updateError, deleteError: $deleteError)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $ItemTypeStateCopyWith<$Res>  {
   factory $ItemTypeStateCopyWith(ItemTypeState value, $Res Function(ItemTypeState) _then) = _$ItemTypeStateCopyWithImpl;
 @useResult
 $Res call({
- List<ItemTypeResponse> itemTypes, bool isLoading, bool isInitialLoading, String? error, int currentPage, int limit, String? searchQuery, Pagination? pagination
+ List<ItemTypeResponse> itemTypes, bool isLoading, bool isInitialLoading, String? error, int currentPage, int limit, String? searchQuery, Pagination? pagination, bool isUpdating, bool isDeleting, bool isCreating, String? createError, String? updateError, String? deleteError
 });
 
 
@@ -63,7 +63,7 @@ class _$ItemTypeStateCopyWithImpl<$Res>
 
 /// Create a copy of ItemTypeState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? itemTypes = null,Object? isLoading = null,Object? isInitialLoading = null,Object? error = freezed,Object? currentPage = null,Object? limit = null,Object? searchQuery = freezed,Object? pagination = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? itemTypes = null,Object? isLoading = null,Object? isInitialLoading = null,Object? error = freezed,Object? currentPage = null,Object? limit = null,Object? searchQuery = freezed,Object? pagination = freezed,Object? isUpdating = null,Object? isDeleting = null,Object? isCreating = null,Object? createError = freezed,Object? updateError = freezed,Object? deleteError = freezed,}) {
   return _then(_self.copyWith(
 itemTypes: null == itemTypes ? _self.itemTypes : itemTypes // ignore: cast_nullable_to_non_nullable
 as List<ItemTypeResponse>,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
@@ -73,7 +73,13 @@ as String?,currentPage: null == currentPage ? _self.currentPage : currentPage //
 as int,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
 as int,searchQuery: freezed == searchQuery ? _self.searchQuery : searchQuery // ignore: cast_nullable_to_non_nullable
 as String?,pagination: freezed == pagination ? _self.pagination : pagination // ignore: cast_nullable_to_non_nullable
-as Pagination?,
+as Pagination?,isUpdating: null == isUpdating ? _self.isUpdating : isUpdating // ignore: cast_nullable_to_non_nullable
+as bool,isDeleting: null == isDeleting ? _self.isDeleting : isDeleting // ignore: cast_nullable_to_non_nullable
+as bool,isCreating: null == isCreating ? _self.isCreating : isCreating // ignore: cast_nullable_to_non_nullable
+as bool,createError: freezed == createError ? _self.createError : createError // ignore: cast_nullable_to_non_nullable
+as String?,updateError: freezed == updateError ? _self.updateError : updateError // ignore: cast_nullable_to_non_nullable
+as String?,deleteError: freezed == deleteError ? _self.deleteError : deleteError // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 /// Create a copy of ItemTypeState
@@ -96,7 +102,7 @@ $PaginationCopyWith<$Res>? get pagination {
 
 
 class _ItemTypeState extends ItemTypeState {
-  const _ItemTypeState({final  List<ItemTypeResponse> itemTypes = const [], this.isLoading = false, this.isInitialLoading = false, this.error, this.currentPage = 1, this.limit = 10, this.searchQuery, this.pagination}): _itemTypes = itemTypes,super._();
+  const _ItemTypeState({final  List<ItemTypeResponse> itemTypes = const [], this.isLoading = false, this.isInitialLoading = false, this.error, this.currentPage = 1, this.limit = 10, this.searchQuery, this.pagination, this.isUpdating = false, this.isDeleting = false, this.isCreating = false, this.createError, this.updateError, this.deleteError}): _itemTypes = itemTypes,super._();
   
 
  final  List<ItemTypeResponse> _itemTypes;
@@ -113,6 +119,12 @@ class _ItemTypeState extends ItemTypeState {
 @override@JsonKey() final  int limit;
 @override final  String? searchQuery;
 @override final  Pagination? pagination;
+@override@JsonKey() final  bool isUpdating;
+@override@JsonKey() final  bool isDeleting;
+@override@JsonKey() final  bool isCreating;
+@override final  String? createError;
+@override final  String? updateError;
+@override final  String? deleteError;
 
 /// Create a copy of ItemTypeState
 /// with the given fields replaced by the non-null parameter values.
@@ -124,16 +136,16 @@ _$ItemTypeStateCopyWith<_ItemTypeState> get copyWith => __$ItemTypeStateCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ItemTypeState&&const DeepCollectionEquality().equals(other._itemTypes, _itemTypes)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isInitialLoading, isInitialLoading) || other.isInitialLoading == isInitialLoading)&&(identical(other.error, error) || other.error == error)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.pagination, pagination) || other.pagination == pagination));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ItemTypeState&&const DeepCollectionEquality().equals(other._itemTypes, _itemTypes)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isInitialLoading, isInitialLoading) || other.isInitialLoading == isInitialLoading)&&(identical(other.error, error) || other.error == error)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.pagination, pagination) || other.pagination == pagination)&&(identical(other.isUpdating, isUpdating) || other.isUpdating == isUpdating)&&(identical(other.isDeleting, isDeleting) || other.isDeleting == isDeleting)&&(identical(other.isCreating, isCreating) || other.isCreating == isCreating)&&(identical(other.createError, createError) || other.createError == createError)&&(identical(other.updateError, updateError) || other.updateError == updateError)&&(identical(other.deleteError, deleteError) || other.deleteError == deleteError));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_itemTypes),isLoading,isInitialLoading,error,currentPage,limit,searchQuery,pagination);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_itemTypes),isLoading,isInitialLoading,error,currentPage,limit,searchQuery,pagination,isUpdating,isDeleting,isCreating,createError,updateError,deleteError);
 
 @override
 String toString() {
-  return 'ItemTypeState(itemTypes: $itemTypes, isLoading: $isLoading, isInitialLoading: $isInitialLoading, error: $error, currentPage: $currentPage, limit: $limit, searchQuery: $searchQuery, pagination: $pagination)';
+  return 'ItemTypeState(itemTypes: $itemTypes, isLoading: $isLoading, isInitialLoading: $isInitialLoading, error: $error, currentPage: $currentPage, limit: $limit, searchQuery: $searchQuery, pagination: $pagination, isUpdating: $isUpdating, isDeleting: $isDeleting, isCreating: $isCreating, createError: $createError, updateError: $updateError, deleteError: $deleteError)';
 }
 
 
@@ -144,7 +156,7 @@ abstract mixin class _$ItemTypeStateCopyWith<$Res> implements $ItemTypeStateCopy
   factory _$ItemTypeStateCopyWith(_ItemTypeState value, $Res Function(_ItemTypeState) _then) = __$ItemTypeStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<ItemTypeResponse> itemTypes, bool isLoading, bool isInitialLoading, String? error, int currentPage, int limit, String? searchQuery, Pagination? pagination
+ List<ItemTypeResponse> itemTypes, bool isLoading, bool isInitialLoading, String? error, int currentPage, int limit, String? searchQuery, Pagination? pagination, bool isUpdating, bool isDeleting, bool isCreating, String? createError, String? updateError, String? deleteError
 });
 
 
@@ -161,7 +173,7 @@ class __$ItemTypeStateCopyWithImpl<$Res>
 
 /// Create a copy of ItemTypeState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? itemTypes = null,Object? isLoading = null,Object? isInitialLoading = null,Object? error = freezed,Object? currentPage = null,Object? limit = null,Object? searchQuery = freezed,Object? pagination = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? itemTypes = null,Object? isLoading = null,Object? isInitialLoading = null,Object? error = freezed,Object? currentPage = null,Object? limit = null,Object? searchQuery = freezed,Object? pagination = freezed,Object? isUpdating = null,Object? isDeleting = null,Object? isCreating = null,Object? createError = freezed,Object? updateError = freezed,Object? deleteError = freezed,}) {
   return _then(_ItemTypeState(
 itemTypes: null == itemTypes ? _self._itemTypes : itemTypes // ignore: cast_nullable_to_non_nullable
 as List<ItemTypeResponse>,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
@@ -171,7 +183,13 @@ as String?,currentPage: null == currentPage ? _self.currentPage : currentPage //
 as int,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
 as int,searchQuery: freezed == searchQuery ? _self.searchQuery : searchQuery // ignore: cast_nullable_to_non_nullable
 as String?,pagination: freezed == pagination ? _self.pagination : pagination // ignore: cast_nullable_to_non_nullable
-as Pagination?,
+as Pagination?,isUpdating: null == isUpdating ? _self.isUpdating : isUpdating // ignore: cast_nullable_to_non_nullable
+as bool,isDeleting: null == isDeleting ? _self.isDeleting : isDeleting // ignore: cast_nullable_to_non_nullable
+as bool,isCreating: null == isCreating ? _self.isCreating : isCreating // ignore: cast_nullable_to_non_nullable
+as bool,createError: freezed == createError ? _self.createError : createError // ignore: cast_nullable_to_non_nullable
+as String?,updateError: freezed == updateError ? _self.updateError : updateError // ignore: cast_nullable_to_non_nullable
+as String?,deleteError: freezed == deleteError ? _self.deleteError : deleteError // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

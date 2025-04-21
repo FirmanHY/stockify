@@ -15,6 +15,12 @@ abstract class UnitState with _$UnitState {
     @Default(10) int limit,
     String? searchQuery,
     Pagination? pagination,
+    @Default(false) bool isCreating,
+    String? createError,
+    @Default(false) bool isUpdating,
+    @Default(false) bool isDeleting,
+    String? updateError,
+    String? deleteError,
   }) = _UnitState;
 
   const UnitState._();

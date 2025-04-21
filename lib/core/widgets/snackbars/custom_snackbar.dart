@@ -1,5 +1,6 @@
 // lib/core/presentation/widgets/snackbars/custom_snackbar.dart
 import 'package:flutter/material.dart';
+import 'package:stockify/core/theme/colors.dart';
 import 'snackbar_type.dart';
 
 class CustomSnackBar extends StatelessWidget {
@@ -56,7 +57,7 @@ class CustomSnackBar extends StatelessWidget {
           icon: Icons.check_circle_rounded,
           iconColor: theme.colorScheme.onPrimaryContainer,
           textColor: theme.colorScheme.onPrimaryContainer,
-          backgroundColor: theme.colorScheme.primaryContainer,
+          backgroundColor: AppColors.successColor,
         );
       case SnackBarType.error:
         return _SnackBarStyles(
@@ -70,7 +71,7 @@ class CustomSnackBar extends StatelessWidget {
           icon: Icons.info_rounded,
           iconColor: theme.colorScheme.onSecondaryContainer,
           textColor: theme.colorScheme.onSecondaryContainer,
-          backgroundColor: theme.colorScheme.secondaryContainer,
+          backgroundColor: AppColors.infoColor,
         );
     }
   }

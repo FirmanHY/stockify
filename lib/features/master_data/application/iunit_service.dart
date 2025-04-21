@@ -9,4 +9,10 @@ abstract interface class IUnitService {
     int limit,
     String? search,
   });
+
+  Future<Result<UnitResponse, Failure>> createUnit(String unitName);
+
+  Future<Result<UnitResponse, Failure>> updateUnit(String id, String unitName);
+
+  Future<Result<void, Failure>> deleteUnit(String id);
 }

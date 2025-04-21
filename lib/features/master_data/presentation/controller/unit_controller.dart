@@ -101,6 +101,69 @@ class UnitController extends StateNotifier<UnitState> {
     }
   }
 
+  Future<void> createUnit(String unitName) async {
+    state = state.copyWith(isCreating: true, createError: null);
+    final result = await ref.read(unitServiceProvider).createUnit(unitName);
+    result.when(
+      (success) {
+        state = state.copyWith(
+          isCreating: false,
+          units: [success, ...state.units],
+        );
+      },
+      (error) {
+        state = state.copyWith(isCreating: false, createError: error.message);
+      },
+    );
+  }
+
+  Future<void> updateUnit(String id, String unitName) async {
+    state = state.copyWith(isUpdating: true, updateError: null);
+    final result = await ref.read(unitServiceProvider).updateUnit(id, unitName);
+    result.when(
+      (success) {
+        state = state.copyWith(
+          isUpdating: false,
+          units:
+              state.units
+                  .map((unit) => unit.unitId == id ? success : unit)
+                  .toList(),
+        );
+      },
+      (error) {
+        state = state.copyWith(isUpdating: false, updateError: error.message);
+      },
+    );
+  }
+
+  Future<void> deleteUnit(String id) async {
+    state = state.copyWith(isDeleting: true, deleteError: null);
+    final result = await ref.read(unitServiceProvider).deleteUnit(id);
+    result.when(
+      (success) {
+        state = state.copyWith(
+          isDeleting: false,
+          units: state.units.where((unit) => unit.unitId != id).toList(),
+        );
+      },
+      (error) {
+        state = state.copyWith(isDeleting: false, deleteError: error.message);
+      },
+    );
+  }
+
+  void clearCreateError() {
+    state = state.copyWith(createError: null);
+  }
+
+  void clearUpdateError() {
+    state = state.copyWith(updateError: null);
+  }
+
+  void clearDeleteError() {
+    state = state.copyWith(deleteError: null);
+  }
+
   @override
   void dispose() {
     _debounceTimer?.cancel();

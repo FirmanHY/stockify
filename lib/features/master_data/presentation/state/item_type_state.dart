@@ -15,6 +15,12 @@ abstract class ItemTypeState with _$ItemTypeState {
     @Default(10) int limit,
     String? searchQuery,
     Pagination? pagination,
+    @Default(false) bool isUpdating,
+    @Default(false) bool isDeleting,
+    @Default(false) bool isCreating,
+    String? createError,
+    String? updateError,
+    String? deleteError,
   }) = _ItemTypeState;
 
   const ItemTypeState._();
