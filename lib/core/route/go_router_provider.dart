@@ -12,8 +12,7 @@ import 'package:stockify/features/master_data/presentation/ui/master_data_screen
 import 'package:stockify/features/reports/presentation/ui/reports_screen.dart';
 import 'package:stockify/features/splash/presentation/ui/splash_screen.dart';
 import 'package:stockify/features/transactions/presentation/ui/transactions_screen.dart';
-import 'package:stockify/features/home/presentation/ui/data_barang_keluar_screen.dart';
-import 'package:stockify/features/home/presentation/ui/data_barang_masuk_screen.dart';
+
 
 final routerProvider = Provider<GoRouter>((ref) {
   final authNotifier = ref.watch(authProvider);
@@ -121,7 +120,10 @@ final routerProvider = Provider<GoRouter>((ref) {
             pageBuilder:
                 (context, state) => const MaterialPage(child: ReportsScreen()),
           ),
-          GoRoute(
+ 
+ 
+ /* Disimpan barang kali butuh
+         GoRoute(
             path: RouteName.barangMasuk,
             name: RouteName.barangMasuk,
             pageBuilder: 
@@ -133,6 +135,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             pageBuilder: 
                 (context, state) => const MaterialPage(child: DataBarangKeluarScreen()),
           ),
+    */
         ],
       ),
     ],
@@ -149,8 +152,10 @@ List<String> _getAllowedRoutes(Role role) {
         RouteName.masterData,
         RouteName.transactions,
         RouteName.reports,
+    /*  Disimpan
         RouteName.barangKeluar,
         RouteName.barangMasuk,
+    */
       ];
     case Role.warehouseManager:
       return [RouteName.home, RouteName.reports];

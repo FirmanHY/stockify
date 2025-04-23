@@ -6,6 +6,8 @@ abstract class RouteName {
   static const String masterData = '/master-data';
   static const String transactions = '/transactions';
   static const String reports = '/reports';
+  /* Disimpan barang kali butuh
   static const String barangMasuk = '/barang-masuk';
   static const String barangKeluar = '/barang-keluar';
+  */
 }

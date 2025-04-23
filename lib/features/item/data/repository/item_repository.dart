@@ -7,6 +7,8 @@ import 'package:stockify/features/item/data/dto/request/item_request.dart';
 import 'package:stockify/features/item/data/dto/response/item_response.dart';
 import 'package:stockify/features/item/data/repository/iitem_repository.dart';
 import 'package:stockify/features/item/data/source/remote/item_api.dart';
+import 'package:stockify/features/item/data/dto/response/low_stock_item_response.dart';
+
 
 final itemRepositoryProvider = Provider.autoDispose<IItemRepository>((ref) {
   final itemApi = ref.watch(itemApiProvider);
@@ -24,6 +26,15 @@ class ItemRepository with DioExceptionMapper implements IItemRepository {
   ) async {
     try {
       return await _itemApi.getItems(request);
+    } on DioException catch (e, s) {
+      throw mapDioExceptionToFailure(e, s);
+    }
+  }
+
+  @override
+  Future<ApiResponse<List<LowStockItemResponse>>> getLowStockItems() async {
+    try {
+      return await _itemApi.getLowStockItems();
     } on DioException catch (e, s) {
       throw mapDioExceptionToFailure(e, s);
     }

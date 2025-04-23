@@ -7,6 +7,7 @@ import 'package:stockify/core/data/remote/end_point.dart';
 import 'package:stockify/core/data/remote/network_service.dart';
 import 'package:stockify/features/item/data/dto/request/item_request.dart';
 import 'package:stockify/features/item/data/dto/response/item_response.dart';
+import 'package:stockify/features/item/data/dto/response/low_stock_item_response.dart';
 
 part 'item_api.g.dart';
 
@@ -23,4 +24,7 @@ abstract class ItemApi {
   Future<ApiResponse<PaginatedResponse<ItemResponse>>> getItems(
     @Queries() ItemRequest request,
   );
+
+  @GET('$itemsEndPoint/low-stock')
+  Future<ApiResponse<List<LowStockItemResponse>>> getLowStockItems();
 }

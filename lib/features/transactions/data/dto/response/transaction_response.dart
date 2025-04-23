@@ -4,7 +4,7 @@ part 'transaction_response.freezed.dart';
 part 'transaction_response.g.dart';
 
 @freezed
-class TransactionResponse with _$TransactionResponse {
+abstract class TransactionResponse with _$TransactionResponse {
   const factory TransactionResponse({
     @JsonKey(name: 'transaction_id') required String transactionId,
     @JsonKey(name: 'item_id') required String itemId,
@@ -19,46 +19,4 @@ class TransactionResponse with _$TransactionResponse {
 
   factory TransactionResponse.fromJson(Map<String, dynamic> json) =>
       _$TransactionResponseFromJson(json);
-      
-        @override
-        // TODO: implement createdAt
-        DateTime get createdAt => throw UnimplementedError();
-      
-        @override
-        // TODO: implement currentStock
-        int get currentStock => throw UnimplementedError();
-      
-        @override
-        // TODO: implement date
-        DateTime get date => throw UnimplementedError();
-      
-        @override
-        // TODO: implement description
-        String get description => throw UnimplementedError();
-      
-        @override
-        // TODO: implement itemId
-        String get itemId => throw UnimplementedError();
-      
-        @override
-        // TODO: implement itemName
-        String get itemName => throw UnimplementedError();
-      
-        @override
-        // TODO: implement quantity
-        int get quantity => throw UnimplementedError();
-      
-        @override
-        Map<String, dynamic> toJson() {
-          // TODO: implement toJson
-          throw UnimplementedError();
-        }
-      
-        @override
-        // TODO: implement transactionId
-        String get transactionId => throw UnimplementedError();
-      
-        @override
-        // TODO: implement transactionType
-        String get transactionType => throw UnimplementedError(); 
 }
