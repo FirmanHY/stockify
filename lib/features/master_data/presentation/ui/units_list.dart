@@ -198,7 +198,7 @@ class _UnitsListState extends ConsumerState<UnitsList> {
                                           .read(dialogServiceProvider)
                                           .showConfirmationDialog(
                                             context: context,
-                                            title: 'Hapus Satuan Barang',
+                                            title: 'Hapus Satuan barang',
                                             content:
                                                 'Apakah kamu yakin ingin menghapus satuan barang ini?',
                                             confirmText: 'Hapus',
