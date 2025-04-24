@@ -25,7 +25,7 @@ class ItemFormWidget extends ConsumerWidget {
   final VoidCallback onSubmit;
   final String submitText;
 
-  const ItemFormWidget({
+  const ItemFormWidget({super.key, 
     required this.formKey,
     required this.itemName,
     required this.minimumStock,
