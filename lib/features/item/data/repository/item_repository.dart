@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stockify/common/dtos/api_response/api_response.dart';
 import 'package:stockify/common/dtos/paginated_response/paginated_response.dart';
 import 'package:stockify/common/mixin/dio_exception_mapper.dart';
+import 'package:stockify/features/item/application/item_service.dart';
 import 'package:stockify/features/item/data/dto/request/create_item_request.dart';
 import 'package:stockify/features/item/data/dto/request/item_request.dart';
 import 'package:stockify/features/item/data/dto/request/update_item_request.dart';
@@ -15,6 +16,17 @@ final itemRepositoryProvider = Provider.autoDispose<IItemRepository>((ref) {
   final itemApi = ref.watch(itemApiProvider);
   return ItemRepository(itemApi);
 });
+
+final lowStockItemsProvider = FutureProvider.autoDispose<List<ItemResponse>>((ref) async {
+  final service = ref.watch(itemServiceProvider);
+  final result = await service.getItems(lowStockOnly: true);
+
+  return result.when(
+    (data) => data.data ?? [],
+    (error) => throw error,
+  );
+});
+
 
 class ItemRepository with DioExceptionMapper implements IItemRepository {
   final ItemApi _itemApi;
