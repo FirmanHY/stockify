@@ -6,11 +6,10 @@ import 'package:stockify/core/data/remote/token/token_service.dart';
 final networkServiceInterceptorProvider =
     Provider.family<NetworkServiceInterceptor, Dio>((ref, dio) {
       final tokenService = ref.watch(tokenServiceProvider(dio));
-
       return NetworkServiceInterceptor(tokenService);
     });
 
-final class NetworkServiceInterceptor extends Interceptor {
+class NetworkServiceInterceptor extends Interceptor {
   final ITokenService _tokenService;
 
   NetworkServiceInterceptor(this._tokenService);
@@ -22,7 +21,9 @@ final class NetworkServiceInterceptor extends Interceptor {
   ) async {
     final accessToken = await _tokenService.getAccessToken();
 
-    options.headers['Content-Type'] = 'application/json';
+    if (options.data is! FormData) {
+      options.headers['Content-Type'] = 'application/json';
+    }
     options.headers['Accept'] = 'application/json';
     if (accessToken != null) {
       options.headers['Authorization'] = accessToken;

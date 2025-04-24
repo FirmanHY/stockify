@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stockify/features/item/application/item_service.dart';
+import 'package:stockify/features/item/data/dto/response/item_response.dart';
 import 'package:stockify/features/item/presentation/state/item_state.dart';
 
 final itemControllerProvider =
@@ -20,7 +21,7 @@ class ItemController extends StateNotifier<ItemState> {
   @override
   void dispose() {
     _debounceTimer?.cancel();
-    _keepAliveLink.close(); // Close keepAlive to allow disposal
+    _keepAliveLink.close();
 
     super.dispose();
   }
@@ -68,6 +69,26 @@ class ItemController extends StateNotifier<ItemState> {
         isInitialLoading: false,
       );
     }
+  }
+
+  Future<void> deleteItem(String itemId) async {
+    state = state.copyWith(isDeleting: true, deleteError: null);
+    final result = await ref.read(itemServiceProvider).deleteItem(itemId);
+    result.when(
+      (success) {
+        state = state.copyWith(
+          items: state.items.where((item) => item.itemId != itemId).toList(),
+          isDeleting: false,
+        );
+      },
+      (error) {
+        state = state.copyWith(isDeleting: false, deleteError: error.message);
+      },
+    );
+  }
+
+  void clearDeleteError() {
+    state = state.copyWith(deleteError: null);
   }
 
   Future<void> loadInitialData() async {
@@ -123,5 +144,28 @@ class ItemController extends StateNotifier<ItemState> {
       items: [],
     );
     loadItems();
+  }
+
+  void addNewItem(ItemResponse newItem) {
+    state = state.copyWith(
+      items: [newItem, ...state.items],
+      pagination:
+          state.pagination != null
+              ? state.pagination!.copyWith(
+                totalData: state.pagination!.totalData + 1,
+              )
+              : null,
+    );
+  }
+
+  void updateExistingItem(ItemResponse updatedItem) {
+    final updatedItems =
+        state.items.map((item) {
+          if (item.itemId == updatedItem.itemId) {
+            return updatedItem;
+          }
+          return item;
+        }).toList();
+    state = state.copyWith(items: updatedItems);
   }
 }

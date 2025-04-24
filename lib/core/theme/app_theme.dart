@@ -39,7 +39,6 @@ class AppTheme {
       fontWeight: FontWeight.w600,
       color: AppColors.blackColor,
     ),
-    centerTitle: true,
   );
 
   static const BottomNavigationBarThemeData _bottomNavigationBarTheme =

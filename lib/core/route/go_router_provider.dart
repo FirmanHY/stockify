@@ -6,13 +6,14 @@ import 'package:stockify/core/providers/auth_provider.dart';
 import 'package:stockify/core/route/route_name.dart';
 import 'package:stockify/core/widgets/widgets.dart';
 import 'package:stockify/features/home/presentation/ui/home_screen.dart';
+import 'package:stockify/features/item/presentation/ui/create_item_screen.dart';
+import 'package:stockify/features/item/presentation/ui/edit_item_screen.dart';
 import 'package:stockify/features/item/presentation/ui/items_screen.dart';
 import 'package:stockify/features/login/presentation/ui/login_screen.dart';
 import 'package:stockify/features/master_data/presentation/ui/master_data_screen.dart';
 import 'package:stockify/features/reports/presentation/ui/reports_screen.dart';
 import 'package:stockify/features/splash/presentation/ui/splash_screen.dart';
 import 'package:stockify/features/transactions/presentation/ui/transactions_screen.dart';
-
 
 final routerProvider = Provider<GoRouter>((ref) {
   final authNotifier = ref.watch(authProvider);
@@ -36,15 +37,12 @@ final routerProvider = Provider<GoRouter>((ref) {
   ===============================
   ''');
 
-      // Block redirect selama proses checking
       if (isChecking) return null;
 
-      // Handle splash screen flow
       if (isSplash) {
         return isAuth ? RouteName.home : RouteName.login;
       }
 
-      // Auth protection rules
       if (isAuth) {
         if (isLogin || isSplash) {
           return RouteName.home;
@@ -52,19 +50,6 @@ final routerProvider = Provider<GoRouter>((ref) {
       } else {
         if (!isLogin) {
           return RouteName.login;
-        }
-      }
-
-      // Role-based access control
-      if (isAuth) {
-        final allowedRoutes = _getAllowedRoutes(authNotifier.role);
-        final currentRoute = state.matchedLocation;
-
-        if (!allowedRoutes.contains(currentRoute)) {
-          debugPrint(
-            '[RBAC] Access denied for ${authNotifier.role} to $currentRoute',
-          );
-          return RouteName.home;
         }
       }
 
@@ -84,6 +69,20 @@ final routerProvider = Provider<GoRouter>((ref) {
         pageBuilder:
             (context, state) =>
                 MaterialPage(key: state.pageKey, child: const LoginScreen()),
+      ),
+      GoRoute(
+        path: RouteName.createItem,
+        name: RouteName.createItem,
+        pageBuilder:
+            (context, state) => const MaterialPage(child: CreateItemScreen()),
+      ),
+      GoRoute(
+        path: '/items/:itemId/edit',
+        name: RouteName.editItem,
+        pageBuilder: (context, state) {
+          final itemId = state.pathParameters['itemId']!;
+          return MaterialPage(child: EditItemScreen(itemId: itemId));
+        },
       ),
       ShellRoute(
         builder: (context, state, child) => MainNavigation(child: child),
@@ -120,9 +119,8 @@ final routerProvider = Provider<GoRouter>((ref) {
             pageBuilder:
                 (context, state) => const MaterialPage(child: ReportsScreen()),
           ),
- 
- 
- /* Disimpan barang kali butuh
+
+          /* Disimpan barang kali butuh
          GoRoute(
             path: RouteName.barangMasuk,
             name: RouteName.barangMasuk,
@@ -152,7 +150,7 @@ List<String> _getAllowedRoutes(Role role) {
         RouteName.masterData,
         RouteName.transactions,
         RouteName.reports,
-    /*  Disimpan
+        /*  Disimpan
         RouteName.barangKeluar,
         RouteName.barangMasuk,
     */
