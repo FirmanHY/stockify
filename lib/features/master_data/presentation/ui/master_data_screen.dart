@@ -23,7 +23,7 @@ class MasterDataScreen extends ConsumerWidget {
                 labelColor: AppColors.whiteColor,
                 unselectedLabelColor: Colors.white70,
                 indicatorColor: AppColors.whiteColor,
-                indicator: const UnderlineTabIndicator(
+                indicator: UnderlineTabIndicator(
                   borderSide: BorderSide(
                     color: AppColors.whiteColor,
                     width: 2.5,
