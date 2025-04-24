@@ -1,19 +1,26 @@
 import 'package:dio/dio.dart';
-import '../../dto/request/transaction_request.dart';
-import '../../dto/response/transaction_response.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:retrofit/retrofit.dart';
+import 'package:stockify/common/dtos/api_response/api_response.dart';
+import 'package:stockify/common/dtos/paginated_response/paginated_response.dart';
+import 'package:stockify/core/data/remote/end_point.dart';
+import 'package:stockify/core/data/remote/network_service.dart';
+import 'package:stockify/features/transactions/data/dto/request/transaction_list_request.dart';
+import 'package:stockify/features/transactions/data/dto/response/transaction_response.dart';
 
-class TransactionApi {
-  final Dio dio;
+part 'transaction_api.g.dart';
 
-  TransactionApi(this.dio);
+final transactionApiProvider = Provider.autoDispose<TransactionApi>((ref) {
+  final dio = ref.watch(networkServiceProvider);
+  return TransactionApi(dio);
+});
 
-  Future<void> create(TransactionRequest request) async {
-    await dio.post('/transactions', data: request.toJson());
-  }
+@RestApi()
+abstract class TransactionApi {
+  factory TransactionApi(Dio dio) => _TransactionApi(dio);
 
-  Future<List<TransactionResponse>> getAll() async {
-    final response = await dio.get('/transactions');
-    final List raw = response.data['data']['data'];
-    return raw.map((e) => TransactionResponse.fromJson(e)).toList();
-  }
+  @GET(transactionsEndPoint)
+  Future<ApiResponse<PaginatedResponse<TransactionResponse>>> getTransactions(
+    @Queries() TransactionListRequest request,
+  );
 }

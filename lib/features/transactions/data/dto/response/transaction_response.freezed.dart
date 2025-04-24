@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TransactionResponse {
 
-@JsonKey(name: 'transaction_id') String get transactionId;@JsonKey(name: 'item_id') String get itemId;@JsonKey(name: 'item_name') String get itemName; DateTime get date; int get quantity;@JsonKey(name: 'transaction_type') String get transactionType; String get description;@JsonKey(name: 'current_stock') int get currentStock;@JsonKey(name: 'created_at') DateTime get createdAt;
+@JsonKey(name: 'transaction_id') String get transactionId;@JsonKey(name: 'item_id') String get itemId;@JsonKey(name: 'item_name') String get itemName; String get image; DateTime get date; int get quantity;@JsonKey(name: 'transaction_type') String get transactionType; String get description;@JsonKey(name: 'current_stock') int get currentStock;@JsonKey(name: 'created_at') DateTime get createdAt;
 /// Create a copy of TransactionResponse
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $TransactionResponseCopyWith<TransactionResponse> get copyWith => _$TransactionR
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransactionResponse&&(identical(other.transactionId, transactionId) || other.transactionId == transactionId)&&(identical(other.itemId, itemId) || other.itemId == itemId)&&(identical(other.itemName, itemName) || other.itemName == itemName)&&(identical(other.date, date) || other.date == date)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.transactionType, transactionType) || other.transactionType == transactionType)&&(identical(other.description, description) || other.description == description)&&(identical(other.currentStock, currentStock) || other.currentStock == currentStock)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransactionResponse&&(identical(other.transactionId, transactionId) || other.transactionId == transactionId)&&(identical(other.itemId, itemId) || other.itemId == itemId)&&(identical(other.itemName, itemName) || other.itemName == itemName)&&(identical(other.image, image) || other.image == image)&&(identical(other.date, date) || other.date == date)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.transactionType, transactionType) || other.transactionType == transactionType)&&(identical(other.description, description) || other.description == description)&&(identical(other.currentStock, currentStock) || other.currentStock == currentStock)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,transactionId,itemId,itemName,date,quantity,transactionType,description,currentStock,createdAt);
+int get hashCode => Object.hash(runtimeType,transactionId,itemId,itemName,image,date,quantity,transactionType,description,currentStock,createdAt);
 
 @override
 String toString() {
-  return 'TransactionResponse(transactionId: $transactionId, itemId: $itemId, itemName: $itemName, date: $date, quantity: $quantity, transactionType: $transactionType, description: $description, currentStock: $currentStock, createdAt: $createdAt)';
+  return 'TransactionResponse(transactionId: $transactionId, itemId: $itemId, itemName: $itemName, image: $image, date: $date, quantity: $quantity, transactionType: $transactionType, description: $description, currentStock: $currentStock, createdAt: $createdAt)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $TransactionResponseCopyWith<$Res>  {
   factory $TransactionResponseCopyWith(TransactionResponse value, $Res Function(TransactionResponse) _then) = _$TransactionResponseCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'transaction_id') String transactionId,@JsonKey(name: 'item_id') String itemId,@JsonKey(name: 'item_name') String itemName, DateTime date, int quantity,@JsonKey(name: 'transaction_type') String transactionType, String description,@JsonKey(name: 'current_stock') int currentStock,@JsonKey(name: 'created_at') DateTime createdAt
+@JsonKey(name: 'transaction_id') String transactionId,@JsonKey(name: 'item_id') String itemId,@JsonKey(name: 'item_name') String itemName, String image, DateTime date, int quantity,@JsonKey(name: 'transaction_type') String transactionType, String description,@JsonKey(name: 'current_stock') int currentStock,@JsonKey(name: 'created_at') DateTime createdAt
 });
 
 
@@ -66,11 +66,12 @@ class _$TransactionResponseCopyWithImpl<$Res>
 
 /// Create a copy of TransactionResponse
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? transactionId = null,Object? itemId = null,Object? itemName = null,Object? date = null,Object? quantity = null,Object? transactionType = null,Object? description = null,Object? currentStock = null,Object? createdAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? transactionId = null,Object? itemId = null,Object? itemName = null,Object? image = null,Object? date = null,Object? quantity = null,Object? transactionType = null,Object? description = null,Object? currentStock = null,Object? createdAt = null,}) {
   return _then(_self.copyWith(
 transactionId: null == transactionId ? _self.transactionId : transactionId // ignore: cast_nullable_to_non_nullable
 as String,itemId: null == itemId ? _self.itemId : itemId // ignore: cast_nullable_to_non_nullable
 as String,itemName: null == itemName ? _self.itemName : itemName // ignore: cast_nullable_to_non_nullable
+as String,image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
 as String,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
 as int,transactionType: null == transactionType ? _self.transactionType : transactionType // ignore: cast_nullable_to_non_nullable
@@ -88,12 +89,13 @@ as DateTime,
 @JsonSerializable()
 
 class _TransactionResponse implements TransactionResponse {
-  const _TransactionResponse({@JsonKey(name: 'transaction_id') required this.transactionId, @JsonKey(name: 'item_id') required this.itemId, @JsonKey(name: 'item_name') required this.itemName, required this.date, required this.quantity, @JsonKey(name: 'transaction_type') required this.transactionType, required this.description, @JsonKey(name: 'current_stock') required this.currentStock, @JsonKey(name: 'created_at') required this.createdAt});
+  const _TransactionResponse({@JsonKey(name: 'transaction_id') required this.transactionId, @JsonKey(name: 'item_id') required this.itemId, @JsonKey(name: 'item_name') required this.itemName, required this.image, required this.date, required this.quantity, @JsonKey(name: 'transaction_type') required this.transactionType, required this.description, @JsonKey(name: 'current_stock') required this.currentStock, @JsonKey(name: 'created_at') required this.createdAt});
   factory _TransactionResponse.fromJson(Map<String, dynamic> json) => _$TransactionResponseFromJson(json);
 
 @override@JsonKey(name: 'transaction_id') final  String transactionId;
 @override@JsonKey(name: 'item_id') final  String itemId;
 @override@JsonKey(name: 'item_name') final  String itemName;
+@override final  String image;
 @override final  DateTime date;
 @override final  int quantity;
 @override@JsonKey(name: 'transaction_type') final  String transactionType;
@@ -114,16 +116,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TransactionResponse&&(identical(other.transactionId, transactionId) || other.transactionId == transactionId)&&(identical(other.itemId, itemId) || other.itemId == itemId)&&(identical(other.itemName, itemName) || other.itemName == itemName)&&(identical(other.date, date) || other.date == date)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.transactionType, transactionType) || other.transactionType == transactionType)&&(identical(other.description, description) || other.description == description)&&(identical(other.currentStock, currentStock) || other.currentStock == currentStock)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TransactionResponse&&(identical(other.transactionId, transactionId) || other.transactionId == transactionId)&&(identical(other.itemId, itemId) || other.itemId == itemId)&&(identical(other.itemName, itemName) || other.itemName == itemName)&&(identical(other.image, image) || other.image == image)&&(identical(other.date, date) || other.date == date)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.transactionType, transactionType) || other.transactionType == transactionType)&&(identical(other.description, description) || other.description == description)&&(identical(other.currentStock, currentStock) || other.currentStock == currentStock)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,transactionId,itemId,itemName,date,quantity,transactionType,description,currentStock,createdAt);
+int get hashCode => Object.hash(runtimeType,transactionId,itemId,itemName,image,date,quantity,transactionType,description,currentStock,createdAt);
 
 @override
 String toString() {
-  return 'TransactionResponse(transactionId: $transactionId, itemId: $itemId, itemName: $itemName, date: $date, quantity: $quantity, transactionType: $transactionType, description: $description, currentStock: $currentStock, createdAt: $createdAt)';
+  return 'TransactionResponse(transactionId: $transactionId, itemId: $itemId, itemName: $itemName, image: $image, date: $date, quantity: $quantity, transactionType: $transactionType, description: $description, currentStock: $currentStock, createdAt: $createdAt)';
 }
 
 
@@ -134,7 +136,7 @@ abstract mixin class _$TransactionResponseCopyWith<$Res> implements $Transaction
   factory _$TransactionResponseCopyWith(_TransactionResponse value, $Res Function(_TransactionResponse) _then) = __$TransactionResponseCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'transaction_id') String transactionId,@JsonKey(name: 'item_id') String itemId,@JsonKey(name: 'item_name') String itemName, DateTime date, int quantity,@JsonKey(name: 'transaction_type') String transactionType, String description,@JsonKey(name: 'current_stock') int currentStock,@JsonKey(name: 'created_at') DateTime createdAt
+@JsonKey(name: 'transaction_id') String transactionId,@JsonKey(name: 'item_id') String itemId,@JsonKey(name: 'item_name') String itemName, String image, DateTime date, int quantity,@JsonKey(name: 'transaction_type') String transactionType, String description,@JsonKey(name: 'current_stock') int currentStock,@JsonKey(name: 'created_at') DateTime createdAt
 });
 
 
@@ -151,11 +153,12 @@ class __$TransactionResponseCopyWithImpl<$Res>
 
 /// Create a copy of TransactionResponse
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? transactionId = null,Object? itemId = null,Object? itemName = null,Object? date = null,Object? quantity = null,Object? transactionType = null,Object? description = null,Object? currentStock = null,Object? createdAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? transactionId = null,Object? itemId = null,Object? itemName = null,Object? image = null,Object? date = null,Object? quantity = null,Object? transactionType = null,Object? description = null,Object? currentStock = null,Object? createdAt = null,}) {
   return _then(_TransactionResponse(
 transactionId: null == transactionId ? _self.transactionId : transactionId // ignore: cast_nullable_to_non_nullable
 as String,itemId: null == itemId ? _self.itemId : itemId // ignore: cast_nullable_to_non_nullable
 as String,itemName: null == itemName ? _self.itemName : itemName // ignore: cast_nullable_to_non_nullable
+as String,image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
 as String,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
 as int,transactionType: null == transactionType ? _self.transactionType : transactionType // ignore: cast_nullable_to_non_nullable

@@ -87,7 +87,7 @@ class _ItemsScreenState extends ConsumerState<ItemsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              'Filter By'.hardcoded,
+                              'Filter By',
                               style: Theme.of(context).textTheme.titleSmall,
                             ),
                             const SizedBox(width: kSmall),

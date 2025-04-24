@@ -9,6 +9,7 @@ abstract class TransactionResponse with _$TransactionResponse {
     @JsonKey(name: 'transaction_id') required String transactionId,
     @JsonKey(name: 'item_id') required String itemId,
     @JsonKey(name: 'item_name') required String itemName,
+    required String image,
     required DateTime date,
     required int quantity,
     @JsonKey(name: 'transaction_type') required String transactionType,

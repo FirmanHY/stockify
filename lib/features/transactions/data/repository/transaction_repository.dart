@@ -1,17 +1,26 @@
-import '../dto/request/transaction_request.dart';
-import '../dto/response/transaction_response.dart';
-import '../source/remote/transaction_api.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:stockify/common/dtos/api_response/api_response.dart';
+import 'package:stockify/common/dtos/paginated_response/paginated_response.dart';
+import 'package:stockify/features/transactions/data/dto/request/transaction_list_request.dart';
+import 'package:stockify/features/transactions/data/dto/response/transaction_response.dart';
+import 'package:stockify/features/transactions/data/repository/itransaction_repository.dart';
+import 'package:stockify/features/transactions/data/source/remote/transaction_api.dart';
 
-class TransactionRepository {
-  final TransactionApi api;
+final transactionRepositoryProvider =
+    Provider.autoDispose<ITransactionRepository>((ref) {
+      final api = ref.watch(transactionApiProvider);
+      return TransactionRepository(api);
+    });
 
-  TransactionRepository(this.api);
+class TransactionRepository implements ITransactionRepository {
+  final TransactionApi _api;
 
-  Future<void> createTransaction(TransactionRequest request) {
-    return api.create(request);
-  }
+  TransactionRepository(this._api);
 
-  Future<List<TransactionResponse>> getAllTransactions() {
-    return api.getAll();
+  @override
+  Future<ApiResponse<PaginatedResponse<TransactionResponse>>> getTransactions(
+    TransactionListRequest request,
+  ) async {
+    return await _api.getTransactions(request);
   }
 }
