@@ -33,11 +33,11 @@ class AppTheme {
 
   static const AppBarTheme _appBarTheme = AppBarTheme(
     backgroundColor: AppColors.whiteColor,
-    foregroundColor: AppColors.blackColor,
+    foregroundColor: AppColors.primaryColor,
     titleTextStyle: TextStyle(
       fontSize: kFontSizeMS,
       fontWeight: FontWeight.w600,
-      color: AppColors.blackColor,
+      color: AppColors.primaryColor,
     ),
   );
 

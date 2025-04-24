@@ -21,45 +21,41 @@ class HomeScreen extends ConsumerWidget {
     final lowStockItems = ref.watch(lowStockItemsProvider);
 
     return Scaffold(
-appBar: PreferredSize(
-  preferredSize: const Size.fromHeight(kDoubleExtraLarge + kMedium),
-  child: Container(
-    color: AppColors.primaryColor,
-    padding: const EdgeInsets.only(bottom: kSmall, right: kSmall, left: kSmall),
-    child: SafeArea(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            width: kDoubleExtraLarge + kSmall,
-            height: kDoubleExtraLarge + kSmall,
-            padding: const EdgeInsets.all(kXSmall),
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.whiteColor, width: 2),
-              borderRadius: BorderRadius.circular(kSmall),
-            ),
-            child: Image.asset(
-              Assets.splashLogo,
-              fit: BoxFit.contain,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kDoubleExtraLarge + kMedium),
+        child: Container(
+          padding: const EdgeInsets.only(
+            bottom: kSmall,
+            right: kLarge,
+            left: kLarge,
+          ),
+          child: SafeArea(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Stockify",
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(
+                    Icons.logout_rounded,
+                    color: AppColors.primaryColor,
+                    size: kLargeMedium,
+                    weight: kLargeMedium,
+                  ),
+                  onPressed: () {
+                    ref.read(authProvider.notifier).logout();
+                    context.go(RouteName.login);
+                  },
+                ),
+              ],
             ),
           ),
-          IconButton(
-            icon: const Icon(
-              Icons.logout_rounded,
-              color: AppColors.whiteColor,
-              size: kLargeMedium + kSmall,
-              weight: kLargeMedium + kSmall,
-            ),
-            onPressed: () {
-              ref.read(authProvider.notifier).logout();
-              context.go(RouteName.login);
-            },
-          ),
-        ],
+        ),
       ),
-    ),
-  ),
-),
 
       body: RefreshIndicator(
         onRefresh: () async {

@@ -44,7 +44,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
 
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(kMedium),
         child: Form(
           key: _formKey,
           child: Column(
