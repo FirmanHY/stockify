@@ -16,6 +16,8 @@ abstract class ItemState with _$ItemState {
     String? searchQuery,
     bool? lowStockOnly,
     Pagination? pagination,
+    @Default(false) bool isDeleting,
+    String? deleteError,
   }) = _ItemState;
 
   const ItemState._();

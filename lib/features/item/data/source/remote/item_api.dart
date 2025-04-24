@@ -25,6 +25,23 @@ abstract class ItemApi {
     @Queries() ItemRequest request,
   );
 
+  @POST(itemsEndPoint)
+  @MultiPart()
+  Future<ApiResponse<ItemResponse>> createItem(@Body() FormData formData);
+
+  @GET('$itemsEndPoint/{itemId}')
+  Future<ApiResponse<ItemResponse>> getItemById(@Path('itemId') String itemId);
+
+  @PUT('$itemsEndPoint/{itemId}')
+  @MultiPart()
+  Future<ApiResponse<ItemResponse>> updateItem(
+    @Path('itemId') String itemId,
+    @Body() FormData formData,
+  );
+
+  @DELETE('$itemsEndPoint/{itemId}')
+  Future<ApiResponse<void>> deleteItem(@Path('itemId') String itemId);
+
   @GET('$itemsEndPoint/low-stock')
   Future<ApiResponse<List<LowStockItemResponse>>> getLowStockItems();
 }
