@@ -18,5 +18,7 @@ abstract class TransactionState with _$TransactionState {
     DateTime? endDate,
     String? typeFilter,
     Pagination? pagination,
+    @Default(false) bool isDeleting,
+    String? deleteError,
   }) = _TransactionState;
 }

@@ -1,6 +1,7 @@
 import 'package:multiple_result/multiple_result.dart';
 import 'package:stockify/common/dtos/paginated_response/paginated_response.dart';
 import 'package:stockify/common/exception/failure.dart';
+import 'package:stockify/core/enums/transaction_type.dart';
 import 'package:stockify/features/transactions/data/dto/response/transaction_response.dart';
 
 abstract interface class ITransactionService {
@@ -13,4 +14,14 @@ abstract interface class ITransactionService {
     DateTime? endDate,
     String? typeFilter,
   });
+
+  Future<Result<TransactionResponse, Failure>> createTransaction({
+    required String itemId,
+    required DateTime date,
+    required int quantity,
+    required TransactionType transactionType,
+    String? description,
+  });
+
+  Future<Result<void, Failure>> deleteTransaction(String transactionId);
 }

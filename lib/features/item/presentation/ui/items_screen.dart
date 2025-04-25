@@ -10,6 +10,7 @@ import 'package:stockify/core/utils/snackbar_service.dart';
 import 'package:stockify/core/widgets/widgets.dart';
 import 'package:stockify/features/item/presentation/controller/item_controller.dart';
 import 'package:stockify/features/item/presentation/state/item_state.dart';
+import 'package:stockify/features/reports/presentation/controller/report_controller.dart';
 
 class ItemsScreen extends ConsumerStatefulWidget {
   const ItemsScreen({super.key});
@@ -50,7 +51,15 @@ class _ItemsScreenState extends ConsumerState<ItemsScreen> {
       appBar: AppBar(
         title: Text("Barang"),
         actions: [
-          ReportButton(onPressed: () {}),
+          ReportButton(
+            onPressed: () {
+              ref
+                  .read(reportControllerProvider.notifier)
+                  .generateItemReport(
+                    lowStockOnly: state.lowStockOnly.toString(),
+                  );
+            },
+          ),
           AddButton(onPressed: () => context.pushNamed(RouteName.createItem)),
           const SizedBox(width: kSmall),
         ],

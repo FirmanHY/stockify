@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TransactionState {
 
- List<TransactionResponse> get transactions; bool get isLoading; bool get isInitialLoading; String? get error; int get currentPage; int get limit; String? get searchQuery; DateTime? get startDate; DateTime? get endDate; String? get typeFilter; Pagination? get pagination;
+ List<TransactionResponse> get transactions; bool get isLoading; bool get isInitialLoading; String? get error; int get currentPage; int get limit; String? get searchQuery; DateTime? get startDate; DateTime? get endDate; String? get typeFilter; Pagination? get pagination; bool get isDeleting; String? get deleteError;
 /// Create a copy of TransactionState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $TransactionStateCopyWith<TransactionState> get copyWith => _$TransactionStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransactionState&&const DeepCollectionEquality().equals(other.transactions, transactions)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isInitialLoading, isInitialLoading) || other.isInitialLoading == isInitialLoading)&&(identical(other.error, error) || other.error == error)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.endDate, endDate) || other.endDate == endDate)&&(identical(other.typeFilter, typeFilter) || other.typeFilter == typeFilter)&&(identical(other.pagination, pagination) || other.pagination == pagination));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransactionState&&const DeepCollectionEquality().equals(other.transactions, transactions)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isInitialLoading, isInitialLoading) || other.isInitialLoading == isInitialLoading)&&(identical(other.error, error) || other.error == error)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.endDate, endDate) || other.endDate == endDate)&&(identical(other.typeFilter, typeFilter) || other.typeFilter == typeFilter)&&(identical(other.pagination, pagination) || other.pagination == pagination)&&(identical(other.isDeleting, isDeleting) || other.isDeleting == isDeleting)&&(identical(other.deleteError, deleteError) || other.deleteError == deleteError));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(transactions),isLoading,isInitialLoading,error,currentPage,limit,searchQuery,startDate,endDate,typeFilter,pagination);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(transactions),isLoading,isInitialLoading,error,currentPage,limit,searchQuery,startDate,endDate,typeFilter,pagination,isDeleting,deleteError);
 
 @override
 String toString() {
-  return 'TransactionState(transactions: $transactions, isLoading: $isLoading, isInitialLoading: $isInitialLoading, error: $error, currentPage: $currentPage, limit: $limit, searchQuery: $searchQuery, startDate: $startDate, endDate: $endDate, typeFilter: $typeFilter, pagination: $pagination)';
+  return 'TransactionState(transactions: $transactions, isLoading: $isLoading, isInitialLoading: $isInitialLoading, error: $error, currentPage: $currentPage, limit: $limit, searchQuery: $searchQuery, startDate: $startDate, endDate: $endDate, typeFilter: $typeFilter, pagination: $pagination, isDeleting: $isDeleting, deleteError: $deleteError)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $TransactionStateCopyWith<$Res>  {
   factory $TransactionStateCopyWith(TransactionState value, $Res Function(TransactionState) _then) = _$TransactionStateCopyWithImpl;
 @useResult
 $Res call({
- List<TransactionResponse> transactions, bool isLoading, bool isInitialLoading, String? error, int currentPage, int limit, String? searchQuery, DateTime? startDate, DateTime? endDate, String? typeFilter, Pagination? pagination
+ List<TransactionResponse> transactions, bool isLoading, bool isInitialLoading, String? error, int currentPage, int limit, String? searchQuery, DateTime? startDate, DateTime? endDate, String? typeFilter, Pagination? pagination, bool isDeleting, String? deleteError
 });
 
 
@@ -63,7 +63,7 @@ class _$TransactionStateCopyWithImpl<$Res>
 
 /// Create a copy of TransactionState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? transactions = null,Object? isLoading = null,Object? isInitialLoading = null,Object? error = freezed,Object? currentPage = null,Object? limit = null,Object? searchQuery = freezed,Object? startDate = freezed,Object? endDate = freezed,Object? typeFilter = freezed,Object? pagination = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? transactions = null,Object? isLoading = null,Object? isInitialLoading = null,Object? error = freezed,Object? currentPage = null,Object? limit = null,Object? searchQuery = freezed,Object? startDate = freezed,Object? endDate = freezed,Object? typeFilter = freezed,Object? pagination = freezed,Object? isDeleting = null,Object? deleteError = freezed,}) {
   return _then(_self.copyWith(
 transactions: null == transactions ? _self.transactions : transactions // ignore: cast_nullable_to_non_nullable
 as List<TransactionResponse>,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
@@ -76,7 +76,9 @@ as String?,startDate: freezed == startDate ? _self.startDate : startDate // igno
 as DateTime?,endDate: freezed == endDate ? _self.endDate : endDate // ignore: cast_nullable_to_non_nullable
 as DateTime?,typeFilter: freezed == typeFilter ? _self.typeFilter : typeFilter // ignore: cast_nullable_to_non_nullable
 as String?,pagination: freezed == pagination ? _self.pagination : pagination // ignore: cast_nullable_to_non_nullable
-as Pagination?,
+as Pagination?,isDeleting: null == isDeleting ? _self.isDeleting : isDeleting // ignore: cast_nullable_to_non_nullable
+as bool,deleteError: freezed == deleteError ? _self.deleteError : deleteError // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 /// Create a copy of TransactionState
@@ -99,7 +101,7 @@ $PaginationCopyWith<$Res>? get pagination {
 
 
 class _TransactionState implements TransactionState {
-  const _TransactionState({final  List<TransactionResponse> transactions = const [], this.isLoading = false, this.isInitialLoading = false, this.error, this.currentPage = 1, this.limit = 10, this.searchQuery, this.startDate, this.endDate, this.typeFilter, this.pagination}): _transactions = transactions;
+  const _TransactionState({final  List<TransactionResponse> transactions = const [], this.isLoading = false, this.isInitialLoading = false, this.error, this.currentPage = 1, this.limit = 10, this.searchQuery, this.startDate, this.endDate, this.typeFilter, this.pagination, this.isDeleting = false, this.deleteError}): _transactions = transactions;
   
 
  final  List<TransactionResponse> _transactions;
@@ -119,6 +121,8 @@ class _TransactionState implements TransactionState {
 @override final  DateTime? endDate;
 @override final  String? typeFilter;
 @override final  Pagination? pagination;
+@override@JsonKey() final  bool isDeleting;
+@override final  String? deleteError;
 
 /// Create a copy of TransactionState
 /// with the given fields replaced by the non-null parameter values.
@@ -130,16 +134,16 @@ _$TransactionStateCopyWith<_TransactionState> get copyWith => __$TransactionStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TransactionState&&const DeepCollectionEquality().equals(other._transactions, _transactions)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isInitialLoading, isInitialLoading) || other.isInitialLoading == isInitialLoading)&&(identical(other.error, error) || other.error == error)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.endDate, endDate) || other.endDate == endDate)&&(identical(other.typeFilter, typeFilter) || other.typeFilter == typeFilter)&&(identical(other.pagination, pagination) || other.pagination == pagination));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TransactionState&&const DeepCollectionEquality().equals(other._transactions, _transactions)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isInitialLoading, isInitialLoading) || other.isInitialLoading == isInitialLoading)&&(identical(other.error, error) || other.error == error)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.endDate, endDate) || other.endDate == endDate)&&(identical(other.typeFilter, typeFilter) || other.typeFilter == typeFilter)&&(identical(other.pagination, pagination) || other.pagination == pagination)&&(identical(other.isDeleting, isDeleting) || other.isDeleting == isDeleting)&&(identical(other.deleteError, deleteError) || other.deleteError == deleteError));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_transactions),isLoading,isInitialLoading,error,currentPage,limit,searchQuery,startDate,endDate,typeFilter,pagination);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_transactions),isLoading,isInitialLoading,error,currentPage,limit,searchQuery,startDate,endDate,typeFilter,pagination,isDeleting,deleteError);
 
 @override
 String toString() {
-  return 'TransactionState(transactions: $transactions, isLoading: $isLoading, isInitialLoading: $isInitialLoading, error: $error, currentPage: $currentPage, limit: $limit, searchQuery: $searchQuery, startDate: $startDate, endDate: $endDate, typeFilter: $typeFilter, pagination: $pagination)';
+  return 'TransactionState(transactions: $transactions, isLoading: $isLoading, isInitialLoading: $isInitialLoading, error: $error, currentPage: $currentPage, limit: $limit, searchQuery: $searchQuery, startDate: $startDate, endDate: $endDate, typeFilter: $typeFilter, pagination: $pagination, isDeleting: $isDeleting, deleteError: $deleteError)';
 }
 
 
@@ -150,7 +154,7 @@ abstract mixin class _$TransactionStateCopyWith<$Res> implements $TransactionSta
   factory _$TransactionStateCopyWith(_TransactionState value, $Res Function(_TransactionState) _then) = __$TransactionStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<TransactionResponse> transactions, bool isLoading, bool isInitialLoading, String? error, int currentPage, int limit, String? searchQuery, DateTime? startDate, DateTime? endDate, String? typeFilter, Pagination? pagination
+ List<TransactionResponse> transactions, bool isLoading, bool isInitialLoading, String? error, int currentPage, int limit, String? searchQuery, DateTime? startDate, DateTime? endDate, String? typeFilter, Pagination? pagination, bool isDeleting, String? deleteError
 });
 
 
@@ -167,7 +171,7 @@ class __$TransactionStateCopyWithImpl<$Res>
 
 /// Create a copy of TransactionState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? transactions = null,Object? isLoading = null,Object? isInitialLoading = null,Object? error = freezed,Object? currentPage = null,Object? limit = null,Object? searchQuery = freezed,Object? startDate = freezed,Object? endDate = freezed,Object? typeFilter = freezed,Object? pagination = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? transactions = null,Object? isLoading = null,Object? isInitialLoading = null,Object? error = freezed,Object? currentPage = null,Object? limit = null,Object? searchQuery = freezed,Object? startDate = freezed,Object? endDate = freezed,Object? typeFilter = freezed,Object? pagination = freezed,Object? isDeleting = null,Object? deleteError = freezed,}) {
   return _then(_TransactionState(
 transactions: null == transactions ? _self._transactions : transactions // ignore: cast_nullable_to_non_nullable
 as List<TransactionResponse>,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
@@ -180,7 +184,9 @@ as String?,startDate: freezed == startDate ? _self.startDate : startDate // igno
 as DateTime?,endDate: freezed == endDate ? _self.endDate : endDate // ignore: cast_nullable_to_non_nullable
 as DateTime?,typeFilter: freezed == typeFilter ? _self.typeFilter : typeFilter // ignore: cast_nullable_to_non_nullable
 as String?,pagination: freezed == pagination ? _self.pagination : pagination // ignore: cast_nullable_to_non_nullable
-as Pagination?,
+as Pagination?,isDeleting: null == isDeleting ? _self.isDeleting : isDeleting // ignore: cast_nullable_to_non_nullable
+as bool,deleteError: freezed == deleteError ? _self.deleteError : deleteError // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
