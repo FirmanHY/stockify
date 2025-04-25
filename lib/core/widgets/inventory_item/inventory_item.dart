@@ -58,17 +58,18 @@ class InventoryItem extends StatelessWidget {
                           maxLines: 1,
                         ),
                       ),
-                      InkWell(
-                        onTap: onPressedActionIcon,
-                        child: Icon(
-                          icon ?? Icons.more_horiz,
-                          color:
-                              icon == Icons.delete
-                                  ? AppColors.dangerColor
-                                  : AppColors.bodyTextColor,
-                          size: kLarge,
+                      if (onPressedActionIcon != null)
+                        InkWell(
+                          onTap: onPressedActionIcon,
+                          child: Icon(
+                            icon ?? Icons.more_horiz,
+                            color:
+                                icon == Icons.delete
+                                    ? AppColors.dangerColor
+                                    : AppColors.bodyTextColor,
+                            size: kLarge,
+                          ),
                         ),
-                      ),
                     ],
                   ),
                   const SizedBox(height: kXSmall),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:stockify/common/extension/string_harcoded.dart';
+import 'package:stockify/core/enums/role.dart';
+import 'package:stockify/core/providers/auth_provider.dart';
 import 'package:stockify/core/route/route_name.dart';
 import 'package:stockify/core/theme/colors.dart';
 import 'package:stockify/core/theme/dimension.dart';
@@ -46,6 +48,7 @@ class _ItemsScreenState extends ConsumerState<ItemsScreen> {
     _setupListener();
     final state = ref.watch(itemControllerProvider);
     final controller = ref.read(itemControllerProvider.notifier);
+    final role = ref.watch(authProvider.select((a) => a.role));
 
     return Scaffold(
       appBar: AppBar(
@@ -60,7 +63,8 @@ class _ItemsScreenState extends ConsumerState<ItemsScreen> {
                   );
             },
           ),
-          AddButton(onPressed: () => context.pushNamed(RouteName.createItem)),
+          if (role == Role.admin || role == Role.warehouseAdmin)
+            AddButton(onPressed: () => context.pushNamed(RouteName.createItem)),
           const SizedBox(width: kSmall),
         ],
       ),
@@ -178,50 +182,62 @@ class _ItemsScreenState extends ConsumerState<ItemsScreen> {
                               categoryLabel: item.typeName,
                               stock: item.stock,
                               minStock: item.minimumStock,
-                              onPressedActionIcon: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  builder:
-                                      (context) => OptionBottomSheetWidget(
-                                        onEdit: () {
-                                          Navigator.pop(context);
-                                          context.pushNamed(
-                                            RouteName.editItem,
-                                            pathParameters: {
-                                              'itemId': item.itemId,
-                                            },
-                                          );
-                                        },
-                                        onDelete: () async {
-                                          Navigator.pop(
-                                            context,
-                                          ); // Tutup bottom sheet
-                                          final confirmed = await ref
-                                              .read(dialogServiceProvider)
-                                              .showConfirmationDialog(
-                                                context: context,
-                                                title: 'Hapus Barang',
-                                                content:
-                                                    'Apakah kamu yakin ingin menghapus barang ini?',
-                                                confirmText: 'Hapus',
-                                                cancelText: 'Batal',
-                                                confirmColor:
-                                                    AppColors.dangerColor,
-                                                confirmIcon:
-                                                    Icons.delete_forever,
-                                              );
-                                          if (confirmed == true) {
-                                            ref
-                                                .read(
-                                                  itemControllerProvider
-                                                      .notifier,
-                                                )
-                                                .deleteItem(item.itemId);
-                                          }
-                                        },
-                                      ),
-                                );
-                              },
+                              onPressedActionIcon:
+                                  (role == Role.admin ||
+                                          role == Role.warehouseAdmin)
+                                      ? () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          builder:
+                                              (
+                                                context,
+                                              ) => OptionBottomSheetWidget(
+                                                onEdit: () {
+                                                  Navigator.pop(context);
+                                                  context.pushNamed(
+                                                    RouteName.editItem,
+                                                    pathParameters: {
+                                                      'itemId': item.itemId,
+                                                    },
+                                                  );
+                                                },
+                                                onDelete: () async {
+                                                  Navigator.pop(
+                                                    context,
+                                                  ); // Tutup bottom sheet
+                                                  final confirmed = await ref
+                                                      .read(
+                                                        dialogServiceProvider,
+                                                      )
+                                                      .showConfirmationDialog(
+                                                        context: context,
+                                                        title: 'Hapus Barang',
+                                                        content:
+                                                            'Apakah kamu yakin ingin menghapus barang ini?',
+                                                        confirmText: 'Hapus',
+                                                        cancelText: 'Batal',
+                                                        confirmColor:
+                                                            AppColors
+                                                                .dangerColor,
+                                                        confirmIcon:
+                                                            Icons
+                                                                .delete_forever,
+                                                      );
+                                                  if (confirmed == true) {
+                                                    ref
+                                                        .read(
+                                                          itemControllerProvider
+                                                              .notifier,
+                                                        )
+                                                        .deleteItem(
+                                                          item.itemId,
+                                                        );
+                                                  }
+                                                },
+                                              ),
+                                        );
+                                      }
+                                      : null,
                               onTapTile: () {
                                 debugPrint('jos gandos onTap tile');
                               },

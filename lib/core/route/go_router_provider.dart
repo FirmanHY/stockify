@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:stockify/core/enums/role.dart';
 import 'package:stockify/core/enums/transaction_type.dart';
 import 'package:stockify/core/providers/auth_provider.dart';
 import 'package:stockify/core/route/route_name.dart';
@@ -12,10 +11,10 @@ import 'package:stockify/features/item/presentation/ui/edit_item_screen.dart';
 import 'package:stockify/features/item/presentation/ui/items_screen.dart';
 import 'package:stockify/features/login/presentation/ui/login_screen.dart';
 import 'package:stockify/features/master_data/presentation/ui/master_data_screen.dart';
-import 'package:stockify/features/reports/presentation/ui/reports_screen.dart';
 import 'package:stockify/features/splash/presentation/ui/splash_screen.dart';
 import 'package:stockify/features/transactions/presentation/ui/create_transaction_screen.dart';
 import 'package:stockify/features/transactions/presentation/ui/transactions_screen.dart';
+import 'package:stockify/features/users/presentation/ui/user_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   final authNotifier = ref.watch(authProvider);
@@ -127,31 +126,13 @@ final routerProvider = Provider<GoRouter>((ref) {
                     const MaterialPage(child: TransactionsScreen()),
           ),
           GoRoute(
-            path: RouteName.reports,
-            name: RouteName.reports,
+            path: RouteName.users,
+            name: RouteName.users,
             pageBuilder:
-                (context, state) => const MaterialPage(child: ReportsScreen()),
+                (context, state) => const MaterialPage(child: UserScreen()),
           ),
         ],
       ),
     ],
   );
 });
-
-List<String> _getAllowedRoutes(Role role) {
-  switch (role) {
-    case Role.admin:
-    case Role.warehouseAdmin:
-      return [
-        RouteName.home,
-        RouteName.items,
-        RouteName.masterData,
-        RouteName.transactions,
-        RouteName.reports,
-      ];
-    case Role.warehouseManager:
-      return [RouteName.home, RouteName.reports];
-    default:
-      return [RouteName.login];
-  }
-}

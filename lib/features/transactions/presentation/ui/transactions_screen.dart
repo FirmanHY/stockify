@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:stockify/common/extension/string_harcoded.dart';
+import 'package:stockify/core/enums/role.dart';
 import 'package:stockify/core/enums/transaction_type.dart';
+import 'package:stockify/core/providers/auth_provider.dart';
 import 'package:stockify/core/route/route_name.dart';
 import 'package:stockify/core/theme/colors.dart';
 import 'package:stockify/core/theme/dimension.dart';
@@ -55,6 +57,7 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen>
     _setupListener();
     final state = ref.watch(transactionControllerProvider);
     final controller = ref.read(transactionControllerProvider.notifier);
+    final role = ref.watch(authProvider.select((a) => a.role));
 
     return Scaffold(
       appBar: AppBar(
@@ -80,16 +83,17 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen>
                   );
             },
           ),
-          AddButton(
-            onPressed: () {
-              final state = ref.read(transactionControllerProvider);
-              final typeStr = state.typeFilter ?? 'in';
-              context.pushNamed(
-                RouteName.createTransaction,
-                pathParameters: {'type': typeStr},
-              );
-            },
-          ),
+          if ((role == Role.admin || role == Role.warehouseAdmin))
+            AddButton(
+              onPressed: () {
+                final state = ref.read(transactionControllerProvider);
+                final typeStr = state.typeFilter ?? 'in';
+                context.pushNamed(
+                  RouteName.createTransaction,
+                  pathParameters: {'type': typeStr},
+                );
+              },
+            ),
           const SizedBox(width: kSmall),
         ],
         bottom: PreferredSize(
@@ -274,29 +278,35 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen>
                               transactionDate: DateFormat(
                                 'dd/MM/yyyy',
                               ).format(transaction.date),
-                              onPressedActionIcon: () async {
-                                final confirmed = await ref
-                                    .read(dialogServiceProvider)
-                                    .showConfirmationDialog(
-                                      context: context,
-                                      title: 'Hapus Satuan Barang',
-                                      content:
-                                          'Apakah kamu yakin ingin menghapus satuan barang ini?',
-                                      confirmText: 'Hapus',
-                                      cancelText: 'Batal',
-                                      confirmColor: AppColors.dangerColor,
-                                      confirmIcon: Icons.delete_forever,
-                                    );
-                                if (confirmed == true) {
-                                  ref
-                                      .read(
-                                        transactionControllerProvider.notifier,
-                                      )
-                                      .deleteTransaction(
-                                        transaction.transactionId,
-                                      );
-                                }
-                              },
+                              onPressedActionIcon:
+                                  (role == Role.admin ||
+                                          role == Role.warehouseAdmin)
+                                      ? () async {
+                                        final confirmed = await ref
+                                            .read(dialogServiceProvider)
+                                            .showConfirmationDialog(
+                                              context: context,
+                                              title: 'Hapus Satuan Barang',
+                                              content:
+                                                  'Apakah kamu yakin ingin menghapus satuan barang ini?',
+                                              confirmText: 'Hapus',
+                                              cancelText: 'Batal',
+                                              confirmColor:
+                                                  AppColors.dangerColor,
+                                              confirmIcon: Icons.delete_forever,
+                                            );
+                                        if (confirmed == true) {
+                                          ref
+                                              .read(
+                                                transactionControllerProvider
+                                                    .notifier,
+                                              )
+                                              .deleteTransaction(
+                                                transaction.transactionId,
+                                              );
+                                        }
+                                      }
+                                      : null,
                             ),
                             if (index < state.transactions.length - 1)
                               const Divider(

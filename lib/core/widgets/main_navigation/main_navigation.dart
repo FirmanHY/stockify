@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:stockify/common/extension/string_harcoded.dart';
 import 'package:stockify/core/enums/role.dart';
 import 'package:stockify/core/providers/auth_provider.dart';
 import 'package:stockify/core/route/route_name.dart';
@@ -43,9 +42,12 @@ class MainNavigation extends ConsumerWidget {
 
     switch (role) {
       case Role.admin:
-      case Role.warehouseAdmin:
         navItems.addAll(_fullAccessNavItems);
         routes.addAll(_fullAccessRoutes);
+        break;
+      case Role.warehouseAdmin:
+        navItems.addAll(_warehouseAdminNavItems);
+        routes.addAll(_warehouseAdminRoutes);
         break;
       case Role.warehouseManager:
         navItems.addAll(_managerNavItems);
@@ -81,40 +83,71 @@ class MainNavigation extends ConsumerWidget {
     _buildNavItem(
       icon: Icons.home_outlined,
       activeIcon: Icons.home_rounded,
-      label: 'Beranda'.hardcoded,
+      label: 'Beranda',
     ),
     _buildNavItem(
       icon: Icons.inventory_2_outlined,
       activeIcon: Icons.inventory_2_rounded,
-      label: 'Barang'.hardcoded,
+      label: 'Barang',
     ),
     _buildNavItem(
       icon: Icons.folder_copy,
       activeIcon: Icons.folder_copy_rounded,
-      label: 'Master'.hardcoded,
+      label: 'Master',
     ),
     _buildNavItem(
       icon: Icons.receipt_long_outlined,
       activeIcon: Icons.receipt_long_rounded,
-      label: 'Transaksi'.hardcoded,
+      label: 'Transaksi',
     ),
     _buildNavItem(
-      icon: Icons.analytics_outlined,
-      activeIcon: Icons.analytics_rounded,
-      label: 'Laporan'.hardcoded,
+      icon: Icons.person_2_outlined,
+      activeIcon: Icons.person_2_rounded,
+      label: 'Pengguna',
     ),
   ];
-
+  List<BottomNavigationBarItem> get _warehouseAdminNavItems => [
+    _buildNavItem(
+      icon: Icons.home_outlined,
+      activeIcon: Icons.home_rounded,
+      label: 'Beranda',
+    ),
+    _buildNavItem(
+      icon: Icons.inventory_2_outlined,
+      activeIcon: Icons.inventory_2_rounded,
+      label: 'Barang',
+    ),
+    _buildNavItem(
+      icon: Icons.folder_copy,
+      activeIcon: Icons.folder_copy_rounded,
+      label: 'Master',
+    ),
+    _buildNavItem(
+      icon: Icons.receipt_long_outlined,
+      activeIcon: Icons.receipt_long_rounded,
+      label: 'Transaksi',
+    ),
+  ];
   List<BottomNavigationBarItem> get _managerNavItems => [
     _buildNavItem(
       icon: Icons.home_outlined,
       activeIcon: Icons.home_rounded,
-      label: 'Beranda'.hardcoded,
+      label: 'Beranda',
     ),
     _buildNavItem(
-      icon: Icons.analytics_outlined,
-      activeIcon: Icons.analytics_rounded,
-      label: 'Laporan'.hardcoded,
+      icon: Icons.inventory_2_outlined,
+      activeIcon: Icons.inventory_2_rounded,
+      label: 'Barang',
+    ),
+    _buildNavItem(
+      icon: Icons.folder_copy,
+      activeIcon: Icons.folder_copy_rounded,
+      label: 'Master',
+    ),
+    _buildNavItem(
+      icon: Icons.receipt_long_outlined,
+      activeIcon: Icons.receipt_long_rounded,
+      label: 'Transaksi',
     ),
   ];
 
@@ -123,10 +156,22 @@ class MainNavigation extends ConsumerWidget {
     RouteName.items,
     RouteName.masterData,
     RouteName.transactions,
-    RouteName.reports,
+    RouteName.users,
   ];
 
-  List<String> get _managerRoutes => [RouteName.home, RouteName.reports];
+  List<String> get _warehouseAdminRoutes => [
+    RouteName.home,
+    RouteName.items,
+    RouteName.masterData,
+    RouteName.transactions,
+  ];
+
+  List<String> get _managerRoutes => [
+    RouteName.home,
+    RouteName.items,
+    RouteName.masterData,
+    RouteName.transactions,
+  ];
 
   BottomNavigationBarItem _buildNavItem({
     required IconData icon,

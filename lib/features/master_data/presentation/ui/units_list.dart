@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stockify/common/extension/string_harcoded.dart';
+import 'package:stockify/core/enums/role.dart';
+import 'package:stockify/core/providers/auth_provider.dart';
 import 'package:stockify/core/theme/colors.dart';
 import 'package:stockify/core/theme/dimension.dart';
 import 'package:stockify/core/utils/dialog_service.dart';
@@ -43,6 +45,7 @@ class _UnitsListState extends ConsumerState<UnitsList> {
   Widget build(BuildContext context) {
     final state = ref.watch(unitControllerProvider);
     final controller = ref.read(unitControllerProvider.notifier);
+    final role = ref.watch(authProvider.select((a) => a.role));
     _setupListener();
     return LoadingOverlay(
       isLoading: state.isCreating || state.isUpdating || state.isDeleting,
@@ -71,38 +74,40 @@ class _UnitsListState extends ConsumerState<UnitsList> {
                         onChanged: controller.updateSearchQuery,
                       ),
                       const SizedBox(height: kSmall),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            builder:
-                                (context) => CreateMasterDataBottomSheet(
-                                  title: 'Tambah Satuan',
-                                  hintText: 'Masukkan nama satuan',
-                                  submitText: "Tambah",
-                                  minLength: 2,
-                                  onSubmit: (name) {
-                                    ref
-                                        .read(unitControllerProvider.notifier)
-                                        .createUnit(name);
-                                  },
+                      if (role == Role.admin || role == Role.warehouseAdmin)
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              builder:
+                                  (context) => CreateMasterDataBottomSheet(
+                                    title: 'Tambah Satuan',
+                                    hintText: 'Masukkan nama satuan',
+                                    submitText: "Tambah",
+                                    minLength: 2,
+                                    onSubmit: (name) {
+                                      ref
+                                          .read(unitControllerProvider.notifier)
+                                          .createUnit(name);
+                                    },
+                                  ),
+                            );
+                          },
+                          icon: const Icon(Icons.add),
+                          label: Text(
+                            'Tambah Satuan',
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ),
+                          style: Theme.of(
+                            context,
+                          ).elevatedButtonTheme.style?.copyWith(
+                            padding:
+                                WidgetStateProperty.all<EdgeInsetsGeometry>(
+                                  EdgeInsets.symmetric(horizontal: kMedium),
                                 ),
-                          );
-                        },
-                        icon: const Icon(Icons.add),
-                        label: Text(
-                          'Tambah Satuan',
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                        style: Theme.of(
-                          context,
-                        ).elevatedButtonTheme.style?.copyWith(
-                          padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                            EdgeInsets.symmetric(horizontal: kMedium),
                           ),
                         ),
-                      ),
                     ],
                   ),
                 ),
@@ -156,67 +161,77 @@ class _UnitsListState extends ConsumerState<UnitsList> {
                         EntityTile(
                           title: unit.unitName,
                           leadingIcon: Icons.straighten, // Icon buat uni
-                          onPressedActionIcon: () {
-                            showModalBottomSheet(
-                              context: context,
-                              builder:
-                                  (context) => OptionBottomSheetWidget(
-                                    onEdit: () {
-                                      Navigator.pop(context);
-                                      showModalBottomSheet(
-                                        context: context,
-                                        isScrollControlled: true,
-                                        builder:
-                                            (
-                                              context,
-                                            ) => CreateMasterDataBottomSheet(
-                                              title: 'Edit Satuan Barang',
-                                              hintText:
-                                                  'Masukkan nama satuan barang',
-                                              submitText: "Edit",
-                                              minLength: 3,
+                          onPressedActionIcon:
+                              (role == Role.admin ||
+                                      role == Role.warehouseAdmin)
+                                  ? () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      builder:
+                                          (context) => OptionBottomSheetWidget(
+                                            onEdit: () {
+                                              Navigator.pop(context);
+                                              showModalBottomSheet(
+                                                context: context,
+                                                isScrollControlled: true,
+                                                builder:
+                                                    (
+                                                      context,
+                                                    ) => CreateMasterDataBottomSheet(
+                                                      title:
+                                                          'Edit Satuan Barang',
+                                                      hintText:
+                                                          'Masukkan nama satuan barang',
+                                                      submitText: "Edit",
+                                                      minLength: 3,
 
-                                              initialValue: unit.unitName,
-                                              onSubmit: (name) {
+                                                      initialValue:
+                                                          unit.unitName,
+                                                      onSubmit: (name) {
+                                                        ref
+                                                            .read(
+                                                              unitControllerProvider
+                                                                  .notifier,
+                                                            )
+                                                            .updateUnit(
+                                                              unit.unitId,
+                                                              name,
+                                                            );
+                                                      },
+                                                    ),
+                                              );
+                                            },
+                                            onDelete: () async {
+                                              Navigator.pop(context);
+
+                                              final confirmed = await ref
+                                                  .read(dialogServiceProvider)
+                                                  .showConfirmationDialog(
+                                                    context: context,
+                                                    title:
+                                                        'Hapus Satuan Barang',
+                                                    content:
+                                                        'Apakah kamu yakin ingin menghapus satuan barang ini?',
+                                                    confirmText: 'Hapus',
+                                                    cancelText: 'Batal',
+                                                    confirmColor:
+                                                        AppColors.dangerColor,
+                                                    confirmIcon:
+                                                        Icons.delete_forever,
+                                                  );
+                                              if (confirmed == true) {
                                                 ref
                                                     .read(
                                                       unitControllerProvider
                                                           .notifier,
                                                     )
-                                                    .updateUnit(
-                                                      unit.unitId,
-                                                      name,
-                                                    );
-                                              },
-                                            ),
-                                      );
-                                    },
-                                    onDelete: () async {
-                                      Navigator.pop(context);
-
-                                      final confirmed = await ref
-                                          .read(dialogServiceProvider)
-                                          .showConfirmationDialog(
-                                            context: context,
-                                            title: 'Hapus Satuan Barang',
-                                            content:
-                                                'Apakah kamu yakin ingin menghapus satuan barang ini?',
-                                            confirmText: 'Hapus',
-                                            cancelText: 'Batal',
-                                            confirmColor: AppColors.dangerColor,
-                                            confirmIcon: Icons.delete_forever,
-                                          );
-                                      if (confirmed == true) {
-                                        ref
-                                            .read(
-                                              unitControllerProvider.notifier,
-                                            )
-                                            .deleteUnit(unit.unitId);
-                                      }
-                                    },
-                                  ),
-                            );
-                          },
+                                                    .deleteUnit(unit.unitId);
+                                              }
+                                            },
+                                          ),
+                                    );
+                                  }
+                                  : null,
                         ),
                         if (index < state.units.length - 1)
                           const Divider(

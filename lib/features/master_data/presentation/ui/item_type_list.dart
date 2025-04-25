@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stockify/common/extension/string_harcoded.dart';
+import 'package:stockify/core/enums/role.dart';
+import 'package:stockify/core/providers/auth_provider.dart';
 import 'package:stockify/core/theme/colors.dart';
 import 'package:stockify/core/theme/dimension.dart';
 import 'package:stockify/core/utils/dialog_service.dart';
@@ -43,6 +45,7 @@ class _ItemTypesListState extends ConsumerState<ItemTypesList> {
   Widget build(BuildContext context) {
     final state = ref.watch(itemTypeControllerProvider);
     final controller = ref.read(itemTypeControllerProvider.notifier);
+    final role = ref.watch(authProvider.select((a) => a.role));
     _setupListener();
     return LoadingOverlay(
       isLoading: state.isCreating || state.isUpdating || state.isDeleting,
@@ -71,40 +74,42 @@ class _ItemTypesListState extends ConsumerState<ItemTypesList> {
                         onChanged: controller.updateSearchQuery,
                       ),
                       const SizedBox(height: kSmall),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            builder:
-                                (context) => CreateMasterDataBottomSheet(
-                                  title: 'Tambah Tipe Barang',
-                                  submitText: "Tambah",
-                                  hintText: 'Masukkan nama tipe barang',
-                                  minLength: 3,
-                                  onSubmit: (name) {
-                                    ref
-                                        .read(
-                                          itemTypeControllerProvider.notifier,
-                                        )
-                                        .createItemType(name);
-                                  },
+                      if (role == Role.admin || role == Role.warehouseAdmin)
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              builder:
+                                  (context) => CreateMasterDataBottomSheet(
+                                    title: 'Tambah Tipe Barang',
+                                    submitText: "Tambah",
+                                    hintText: 'Masukkan nama tipe barang',
+                                    minLength: 3,
+                                    onSubmit: (name) {
+                                      ref
+                                          .read(
+                                            itemTypeControllerProvider.notifier,
+                                          )
+                                          .createItemType(name);
+                                    },
+                                  ),
+                            );
+                          },
+                          icon: const Icon(Icons.add),
+                          label: Text(
+                            'Tipe Barang',
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ),
+                          style: Theme.of(
+                            context,
+                          ).elevatedButtonTheme.style?.copyWith(
+                            padding:
+                                WidgetStateProperty.all<EdgeInsetsGeometry>(
+                                  EdgeInsets.symmetric(horizontal: kMedium),
                                 ),
-                          );
-                        },
-                        icon: const Icon(Icons.add),
-                        label: Text(
-                          'Tipe Barang',
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                        style: Theme.of(
-                          context,
-                        ).elevatedButtonTheme.style?.copyWith(
-                          padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                            EdgeInsets.symmetric(horizontal: kMedium),
                           ),
                         ),
-                      ),
                     ],
                   ),
                 ),
@@ -140,98 +145,102 @@ class _ItemTypesListState extends ConsumerState<ItemTypesList> {
                           ),
                 )
                 : SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      if (index == state.itemTypes.length && state.isLoading) {
-                        return const Center(
-                          child: Padding(
-                            padding: EdgeInsets.all(kMedium),
-                            child: EntityTileShimmer(),
-                          ),
-                        );
-                      }
-                      final itemType = state.itemTypes[index];
-                      return Column(
-                        children: [
-                          EntityTile(
-                            title: itemType.typeName,
-                            leadingIcon: Icons.category, // Icon buat item type
-
-                            onPressedActionIcon: () {
-                              showModalBottomSheet(
-                                context: context,
-                                builder:
-                                    (context) => OptionBottomSheetWidget(
-                                      onEdit: () {
-                                        Navigator.pop(context);
-                                        showModalBottomSheet(
-                                          context: context,
-                                          isScrollControlled: true,
-                                          builder:
-                                              (
-                                                context,
-                                              ) => CreateMasterDataBottomSheet(
-                                                title: 'Edit Tipe Barang',
-                                                hintText:
-                                                    'Masukkan nama tipe barang',
-                                                minLength: 3,
-                                                initialValue: itemType.typeName,
-                                                submitText: "Edit",
-                                                onSubmit: (name) {
-                                                  ref
-                                                      .read(
-                                                        itemTypeControllerProvider
-                                                            .notifier,
-                                                      )
-                                                      .updateItemType(
-                                                        itemType.typeId,
-                                                        name,
-                                                      );
-                                                },
-                                              ),
-                                        );
-                                      },
-                                      onDelete: () async {
-                                        Navigator.pop(context);
-                                        final confirmed = await ref
-                                            .read(dialogServiceProvider)
-                                            .showConfirmationDialog(
-                                              context: context,
-                                              title: 'Hapus Tipe Barang',
-                                              content:
-                                                  'Apakah kamu yakin ingin menghapus tipe barang ini?',
-                                              confirmText: 'Hapus',
-                                              cancelText: 'Batal',
-                                              confirmColor:
-                                                  AppColors.dangerColor,
-                                              confirmIcon: Icons.delete_forever,
-                                            );
-
-                                        if (confirmed == true) {
-                                          ref
-                                              .read(
-                                                itemTypeControllerProvider
-                                                    .notifier,
-                                              )
-                                              .deleteItemType(itemType.typeId);
-                                        }
-                                      },
-                                    ),
-                              );
-                            },
-                          ),
-                          if (index < state.itemTypes.length - 1)
-                            const Divider(
-                              height: 1,
-                              thickness: 1,
-                              color: AppColors.borderColor,
-                            ),
-                        ],
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                    if (index == state.itemTypes.length && state.isLoading) {
+                      return const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(kMedium),
+                          child: EntityTileShimmer(),
+                        ),
                       );
-                    },
-                    childCount:
-                        state.itemTypes.length + (state.isLoading ? 1 : 0),
-                  ),
+                    }
+                    final itemType = state.itemTypes[index];
+                    return Column(
+                      children: [
+                        EntityTile(
+                          title: itemType.typeName,
+                          leadingIcon: Icons.category, // Icon buat item type
+
+                          onPressedActionIcon:
+                              (role == Role.admin ||
+                                      role == Role.warehouseAdmin)
+                                  ? () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      builder:
+                                          (context) => OptionBottomSheetWidget(
+                                            onEdit: () {
+                                              Navigator.pop(context);
+                                              showModalBottomSheet(
+                                                context: context,
+                                                isScrollControlled: true,
+                                                builder:
+                                                    (
+                                                      context,
+                                                    ) => CreateMasterDataBottomSheet(
+                                                      title: 'Edit Tipe Barang',
+                                                      hintText:
+                                                          'Masukkan nama tipe barang',
+                                                      minLength: 3,
+                                                      initialValue:
+                                                          itemType.typeName,
+                                                      submitText: "Edit",
+                                                      onSubmit: (name) {
+                                                        ref
+                                                            .read(
+                                                              itemTypeControllerProvider
+                                                                  .notifier,
+                                                            )
+                                                            .updateItemType(
+                                                              itemType.typeId,
+                                                              name,
+                                                            );
+                                                      },
+                                                    ),
+                                              );
+                                            },
+                                            onDelete: () async {
+                                              Navigator.pop(context);
+                                              final confirmed = await ref
+                                                  .read(dialogServiceProvider)
+                                                  .showConfirmationDialog(
+                                                    context: context,
+                                                    title: 'Hapus Tipe Barang',
+                                                    content:
+                                                        'Apakah kamu yakin ingin menghapus tipe barang ini?',
+                                                    confirmText: 'Hapus',
+                                                    cancelText: 'Batal',
+                                                    confirmColor:
+                                                        AppColors.dangerColor,
+                                                    confirmIcon:
+                                                        Icons.delete_forever,
+                                                  );
+
+                                              if (confirmed == true) {
+                                                ref
+                                                    .read(
+                                                      itemTypeControllerProvider
+                                                          .notifier,
+                                                    )
+                                                    .deleteItemType(
+                                                      itemType.typeId,
+                                                    );
+                                              }
+                                            },
+                                          ),
+                                    );
+                                  }
+                                  : null,
+                        ),
+                        if (index < state.itemTypes.length - 1)
+                          const Divider(
+                            height: 1,
+                            thickness: 1,
+                            color: AppColors.borderColor,
+                          ),
+                      ],
+                    );
+                  }, childCount: state.itemTypes.length + (state.isLoading ? 1 : 0)),
                 ),
           ],
         ),

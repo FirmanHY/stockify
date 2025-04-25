@@ -47,15 +47,16 @@ class EntityTile extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            InkWell(
-              onTap: onPressedActionIcon,
-              borderRadius: BorderRadius.circular(20),
-              child: Icon(
-                actionIcon ?? Icons.more_vert,
-                size: kLarge,
-                color: AppColors.bodyTextColor,
+            if (onPressedActionIcon != null)
+              InkWell(
+                onTap: onPressedActionIcon,
+                borderRadius: BorderRadius.circular(20),
+                child: Icon(
+                  actionIcon ?? Icons.more_vert,
+                  size: kLarge,
+                  color: AppColors.bodyTextColor,
+                ),
               ),
-            ),
           ],
         ),
       ),
