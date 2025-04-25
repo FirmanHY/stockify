@@ -6,3 +6,4 @@ const String transactionsEndPoint = '/transactions';
 const String summaryInventoryEndPoint = '/summary/inventory';
 const String reportTransactionEndPoint = '/reports/transactions';
 const String reportItemEndPoint = '/reports/items';
+const String usersEndPoint = '/admin/users';

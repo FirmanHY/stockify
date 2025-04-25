@@ -4,6 +4,7 @@ import 'package:stockify/core/theme/dimension.dart';
 
 class EntityTile extends StatelessWidget {
   final String title;
+  final String? subtitle;
   final IconData? leadingIcon;
   final VoidCallback? onTap;
   final VoidCallback? onPressedActionIcon;
@@ -12,6 +13,7 @@ class EntityTile extends StatelessWidget {
   const EntityTile({
     super.key,
     required this.title,
+    this.subtitle,
     this.leadingIcon,
     this.onTap,
     this.onPressedActionIcon,
@@ -39,12 +41,27 @@ class EntityTile extends StatelessWidget {
             ),
             const SizedBox(width: kMediumSmall),
             Expanded(
-              child: Text(
-                title,
-                style: textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-                overflow: TextOverflow.ellipsis,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  if (subtitle != null) ...[
+                    const SizedBox(height: 4),
+                    Text(
+                      subtitle!,
+                      style: textTheme.bodySmall?.copyWith(
+                        color: AppColors.bodyTextColor,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ],
               ),
             ),
             if (onPressedActionIcon != null)

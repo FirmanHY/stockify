@@ -129,7 +129,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: RouteName.users,
             name: RouteName.users,
             pageBuilder:
-                (context, state) => const MaterialPage(child: UserScreen()),
+                (context, state) => const MaterialPage(child: UsersScreen()),
           ),
         ],
       ),
