@@ -114,7 +114,7 @@ class EditItemController extends StateNotifier<EditItemState> {
           .updateItem(itemId, request);
       result.when(
         (success) {
-          ref.read(itemControllerProvider.notifier).updateExistingItem(success);
+          ref.read(itemControllerProvider.notifier).refreshData();
           state = state.copyWith(isUpdating: false);
         },
         (error) =>

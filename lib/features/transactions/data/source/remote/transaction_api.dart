@@ -5,6 +5,7 @@ import 'package:stockify/common/dtos/api_response/api_response.dart';
 import 'package:stockify/common/dtos/paginated_response/paginated_response.dart';
 import 'package:stockify/core/data/remote/end_point.dart';
 import 'package:stockify/core/data/remote/network_service.dart';
+import 'package:stockify/features/transactions/data/dto/request/create_transaction_request.dart';
 import 'package:stockify/features/transactions/data/dto/request/transaction_list_request.dart';
 import 'package:stockify/features/transactions/data/dto/response/transaction_response.dart';
 
@@ -23,4 +24,12 @@ abstract class TransactionApi {
   Future<ApiResponse<PaginatedResponse<TransactionResponse>>> getTransactions(
     @Queries() TransactionListRequest request,
   );
+
+  @POST(transactionsEndPoint)
+  Future<ApiResponse<TransactionResponse>> createTransaction(
+    @Body() CreateTransactionRequest request,
+  );
+
+  @DELETE('$transactionsEndPoint/{id}')
+  Future<ApiResponse<void>> deleteTransaction(@Path('id') String transactionId);
 }

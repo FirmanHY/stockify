@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stockify/core/enums/transaction_type.dart';
 import 'package:stockify/features/transactions/application/transaction_service.dart';
@@ -49,6 +51,8 @@ class TransactionController extends StateNotifier<TransactionState> {
           );
         },
         (error) {
+          debugPrint(error.message);
+
           state = state.copyWith(
             error: error.message,
             isLoading: false,
@@ -57,6 +61,7 @@ class TransactionController extends StateNotifier<TransactionState> {
         },
       );
     } catch (e) {
+      debugPrint(e.toString());
       state = state.copyWith(
         error: e.toString(),
         isLoading: false,
@@ -94,6 +99,31 @@ class TransactionController extends StateNotifier<TransactionState> {
       transactions: [],
     );
     await loadTransactions();
+  }
+
+  Future<void> deleteTransaction(String transactionId) async {
+    state = state.copyWith(isDeleting: true, deleteError: null);
+    final result = await ref
+        .read(transactionServiceProvider)
+        .deleteTransaction(transactionId);
+    result.when(
+      (success) {
+        state = state.copyWith(
+          transactions:
+              state.transactions
+                  .where((t) => t.transactionId != transactionId)
+                  .toList(),
+          isDeleting: false,
+        );
+      },
+      (error) {
+        state = state.copyWith(isDeleting: false, deleteError: error.message);
+      },
+    );
+  }
+
+  void clearDeleteError() {
+    state = state.copyWith(deleteError: null);
   }
 
   void updateSearchQuery(String query) {

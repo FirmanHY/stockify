@@ -25,7 +25,8 @@ class ItemFormWidget extends ConsumerWidget {
   final VoidCallback onSubmit;
   final String submitText;
 
-  const ItemFormWidget({super.key, 
+  const ItemFormWidget({
+    super.key,
     required this.formKey,
     required this.itemName,
     required this.minimumStock,
@@ -71,7 +72,10 @@ class ItemFormWidget extends ConsumerWidget {
                     .map(
                       (type) => DropdownMenuItem(
                         value: type,
-                        child: Text(type.typeName),
+                        child: Text(
+                          type.typeName,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
                       ),
                     )
                     .toList(),
@@ -92,7 +96,10 @@ class ItemFormWidget extends ConsumerWidget {
                     .map(
                       (unit) => DropdownMenuItem(
                         value: unit,
-                        child: Text(unit.unitName),
+                        child: Text(
+                          unit.unitName,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
                       ),
                     )
                     .toList(),

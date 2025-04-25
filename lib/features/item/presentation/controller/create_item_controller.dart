@@ -85,7 +85,7 @@ class CreateItemController extends StateNotifier<CreateItemState> {
       final result = await ref.read(itemServiceProvider).createItem(request);
       result.when(
         (success) {
-          ref.read(itemControllerProvider.notifier).addNewItem(success);
+          ref.read(itemControllerProvider.notifier).refreshData();
           state = state.copyWith(isCreating: false);
         },
         (failure) =>

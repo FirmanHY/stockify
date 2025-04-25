@@ -62,7 +62,10 @@ class InventoryItem extends StatelessWidget {
                         onTap: onPressedActionIcon,
                         child: Icon(
                           icon ?? Icons.more_horiz,
-                          color: AppColors.bodyTextColor,
+                          color:
+                              icon == Icons.delete
+                                  ? AppColors.dangerColor
+                                  : AppColors.bodyTextColor,
                           size: kLarge,
                         ),
                       ),

@@ -8,4 +8,5 @@ abstract class RouteName {
   static const String reports = '/reports';
   static const String createItem = '/create-item';
   static const String editItem = 'editItem';
+  static const String createTransaction = 'createTransaction';
 }

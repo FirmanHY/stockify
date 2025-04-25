@@ -90,6 +90,11 @@ dev_dependencies:
   #generator untuk riverpod - bantu generate provider & anotasi otomatis
   #https://pub.dev/packages/riverpod_generator
   riverpod_generator: ^2.6.5
+
+  path_provider: ^2.1.5
+  permission_handler: ^12.0.0+1
+  open_file: ^3.5.10
+  share_plus: ^11.0.0
 flutter:
   uses-material-design: true
   assets:
