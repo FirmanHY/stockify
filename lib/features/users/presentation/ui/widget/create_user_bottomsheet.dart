@@ -108,7 +108,10 @@ class _CreateUserBottomSheetState extends State<CreateUserBottomSheet> {
                     roles.map((role) {
                       return DropdownMenuItem<String>(
                         value: role,
-                        child: Text(role),
+                        child: Text(
+                          role,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
                       );
                     }).toList(),
                 onChanged: (value) {
